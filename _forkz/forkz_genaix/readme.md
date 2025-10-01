@@ -1,5 +1,5 @@
 ![FORKZJS](../../assets/forksjs.jpg)
-# ForkzJS (*Forkz*)
+# ForkzGENAIX (*Forkz*)
 
 > Developed by **#asytrick**
 > E‑mail: [eusmool@gmail.com](mailto:eusmool@gmail.com)
