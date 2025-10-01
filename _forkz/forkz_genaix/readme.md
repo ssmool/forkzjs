@@ -1,4 +1,4 @@
-## forkz_genaix
+### FORKZ GENAIX
 
 ![FORKZJS](../../assets/forksjs.jpg)
 # ForkzWWW (*Forkz*)
