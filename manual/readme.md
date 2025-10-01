@@ -102,24 +102,44 @@ It supports class‑based customization, letting you style output as you like wh
 ---
 
 ## 🧱 Example: Generate <form> Scaffolding
+## 🧰 Example: Scaffolding Forms with `_forkz_mock.js`
 
-**File:** `forkz_x.html` (extended)
+`_forkz_mock.js` is used to **generate mock data** and then build HTML `<form>` elements automatically from it using `buildForm(data)`.
+
+### 🔧 Usage
 
 ```html
+<script src="_forkz_mock.js"></script>
 <script src="_forkz_skafolding.js"></script>
 <script>
-  _data.then(data => {
-    buildForm(data); // Creates form inputs from data structure
-  });
+  const mockData = generateMockData(3, ['name', 'email', 'phone'], 'user-form');
+
+  buildForm(mockData); // Auto-generate <form> inputs based on fields
 </script>
 ```
 
-🧩 `buildForm(data)` generates:
+### 📦 Output (example)
 
 ```html
-<form method="post" class="{{nodeClass}}">
-  <input type="text" id="{{node}}" name="{{node}}" />
+<form method="post" action="#" class="user-form">
+  <input type="text" id="name" name="name" placeholder="name" />
+  <input type="text" id="email" name="email" placeholder="email" />
+  <input type="text" id="phone" name="phone" placeholder="phone" />
 </form>
+```
+
+* `generateMockData(count, fields, className)` creates an array of mock objects.
+* Each object contains keys from `fields`, filled with random or sample values.
+* `buildForm(data)` uses these keys to generate input fields inside `<form>` tags.
+
+### 🧪 Example Use Case
+
+Use this for:
+
+* Prototyping form templates
+* Generating sample forms for testing
+* Creating form UI quickly based on mock structures
+
 ```
 
 🔢 Automatically grouped by `nodeClass` and indexed by data position.
@@ -154,6 +174,7 @@ Features:
 ├── forkz_x.html
 ├── forkz.sh
 └── README.md
+└── manual/README.md
 ```
 
 ---
