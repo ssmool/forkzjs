@@ -9,7 +9,7 @@
 # Launch server
 echo "🚀 Starting server at http://localhost:$_forkzport"
 
-``bash
+```bash
 python3 -m http.server "$_forkzport"
 ```
 
