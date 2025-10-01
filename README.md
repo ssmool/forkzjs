@@ -1,7 +1,3 @@
-Here’s a refined **README.md** draft for your **ForkzJS / forkz** project, incorporating your examples and requests. Feel free to adapt the wording, styling or structure to your taste:
-
----
-
 ![Yoda](./assets/yoda.png)
 
 # ForkzJS (aka *Forkz*)
