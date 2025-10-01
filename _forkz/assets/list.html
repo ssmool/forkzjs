@@ -1,0 +1,102 @@
+<style>
+    /* --- Custom Font Setup (Example) --- */
+    /* Ensure you link to or import your desired font-face */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    /* --- Custom Card Container Styles --- */
+    .custom-card {
+        /* Corner Radius and Border */
+        border-radius: 5px; /* Corner radius 5 px */
+        border: 1px solid black; /* Border 1 px black */
+        overflow: hidden; /* Important to keep children within the radius */
+        width: 100%; /* Default width */
+        max-width: 400px; /* Example max width for a card */
+        margin: 0 auto; /* Center the div */
+
+        /* Background Colors/Images */
+        background-color: #f8f9fa; /* Light background color */
+        /* To use a background image: */
+        /* background-image: url('path/to/your/image.jpg'); */
+        /* background-size: cover; */
+        /* background-position: center; */
+    }
+
+    /* --- Shadow Styling (Bluer Black Color) --- */
+    .shadow-sm-blue-dark {
+        /* Custom shadow: X-offset Y-offset Blur Spread Color (dark blue-ish black) */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 20, 0.5);
+    }
+
+    /* --- Title/Header Area Styles --- */
+    .card-header-styled {
+        padding: 15px;
+        background-color: #e9ecef; /* Slightly darker header background */
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-title-styled {
+        /* font-face, color, font-size for title {{_data.title}} */
+        font-family: 'Roboto', sans-serif;
+        color: #007bff; /* Blue color */
+        font-size: 1.5rem; /* Large font size */
+        margin-bottom: 0;
+    }
+
+    .card-description-styled {
+        /* font-face, color, font-size for description <h4>{{_data.description}}</h4> */
+        font-family: 'Roboto', sans-serif;
+        color: #6c757d; /* Muted color */
+        font-size: 1rem; /* Smaller font size */
+        font-weight: 400;
+        margin-top: 5px; /* Space from the title */
+        margin-bottom: 0;
+    }
+
+    /* --- List Item Styles (for the <ul>) --- */
+    .custom-list-item {
+        /* font-face, color, font-size for list items */
+        font-family: 'Roboto', sans-serif;
+        color: #343a40; /* Dark text color */
+        font-size: 1.1rem;
+        /* Custom style for the list background */
+        background-color: #ffffff;
+    }
+
+    /* --- Footer/Link Styles --- */
+    .card-footer-styled {
+        padding: 15px;
+        background-color: #e9ecef; /* Match header background */
+        text-align: right;
+    }
+
+    .card-link-styled {
+        /* Link <a> style */
+        font-family: 'Roboto', sans-serif;
+        color: #17a2b8; /* Cyan-like color */
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .card-link-styled:hover {
+        text-decoration: underline;
+    }
+</style>
+<div class="container my-5">
+    <div class="custom-card shadow-sm-blue-dark">
+        <div class="card-header-styled">
+            <h3 class="card-title-styled">{{_data.title}}</h3>
+            <span class="d-block"></span>
+            <h4 class="card-description-styled">{{_data.description}}</h4>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item custom-list-item">List Item 1</li>
+            <li class="list-group-item custom-list-item">List Item 2</li>
+            <li class="list-group-item custom-list-item">List Item 3</li>
+        </ul>
+
+        <div class="card-footer-styled">
+            <a href="{{_data.uri}}" class="card-link-styled">Read More</a>
+        </div>
+    </div>
+</div>

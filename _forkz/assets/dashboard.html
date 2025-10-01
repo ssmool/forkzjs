@@ -1,0 +1,257 @@
+<div class="container my-5">
+    
+    <div id="tablePagination" class="d-flex justify-content-center mb-3">
+        </div>
+    
+    <div id="tableCardCarousel" class="carousel slide" data-bs-ride="false">
+        
+        <div class="carousel-indicators d-none">
+            </div>
+        
+        <div class="carousel-inner" id="tableCarouselInner">
+            </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#tableCardCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#tableCardCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    const RESULTS_PER_PAGE = 20;
+    let tableCarouselInstance; // To store the Bootstrap Carousel object
+
+    /**
+     * Dynamically creates a Bootstrap Carousel where each slide is a card containing a paginated table.
+     * @param {Array<string>} fields_arr - Array of column headers (fields).
+     * @param {Array<Object>} data - Array of data objects for the table rows.
+     */
+    function mountTableCarousel(fields_arr, data) {
+        const carouselInner = document.getElementById('tableCarouselInner');
+        const paginationContainer = document.getElementById('tablePagination');
+        
+        if (!carouselInner || !paginationContainer) {
+            console.error("Required HTML elements not found.");
+            return;
+        }
+
+        carouselInner.innerHTML = '';
+        paginationContainer.innerHTML = '';
+
+        const totalResults = data.length;
+        const totalPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+
+        // --- 1. Generate Carousel Slides (Table Cards) ---
+        for (let page = 0; page < totalPages; page++) {
+            const startIndex = page * RESULTS_PER_PAGE;
+            const endIndex = startIndex + RESULTS_PER_PAGE;
+            const pageData = data.slice(startIndex, endIndex);
+            const isActive = page === 0 ? 'active' : '';
+
+            // Generate Table HTML
+            let tableHtml = `
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover custom-table-styled">
+                        <thead class="custom-thead-styled">
+                            <tr>
+                                ${fields_arr.map(field => `<th class="custom-th-styled">${field}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody class="custom-tbody-styled">
+                            ${pageData.map(row => `
+                                <tr>
+                                    ${fields_arr.map(field => `
+                                        <td class="custom-td-styled">${row[field.toLowerCase().replace(/\s/g, '_')] || ''}</td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            // Wrap Table in the Card Structure
+            const cardHtml = `
+                <div class="carousel-item ${isActive}">
+                    <div class="d-flex justify-content-center">
+                        <div class="custom-card shadow-sm-black">
+                            
+                            <div class="card-header-styled">
+                                <h3 class="card-title-styled">Results Page ${page + 1} of ${totalPages}</h3>
+                                <span></span>
+                                <h4 class="card-description-styled">Showing items ${startIndex + 1} - ${Math.min(endIndex, totalResults)}</h4>
+                            </div>
+
+                            <div class="card-body form-body-styled">
+                                ${tableHtml}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            `;
+            carouselInner.insertAdjacentHTML('beforeend', cardHtml);
+        }
+
+        // --- 2. Generate Custom Pagination Buttons ---
+        const paginationList = document.createElement('ul');
+        paginationList.className = 'pagination custom-pagination';
+        
+        for (let page = 0; page < totalPages; page++) {
+            const isActive = page === 0 ? 'active' : '';
+            const listItem = document.createElement('li');
+            listItem.className = `page-item ${isActive}`;
+            
+            const button = document.createElement('button');
+            button.className = 'page-link custom-page-link';
+            button.textContent = page + 1;
+            button.setAttribute('data-bs-target', '#tableCardCarousel');
+            button.setAttribute('data-bs-slide-to', page);
+            button.setAttribute('aria-label', `Go to slide ${page + 1}`);
+
+            listItem.appendChild(button);
+            paginationList.appendChild(listItem);
+        }
+        paginationContainer.appendChild(paginationList);
+
+        // --- 3. Initialize Carousel and Sync Pagination ---
+        const carouselElement = document.getElementById('tableCardCarousel');
+        tableCarouselInstance = new bootstrap.Carousel(carouselElement);
+
+        carouselElement.addEventListener('slide.bs.carousel', function (e) {
+            // Update active state on custom pagination buttons
+            document.querySelectorAll('.custom-pagination .page-item').forEach(li => li.classList.remove('active'));
+            document.querySelector(`.custom-pagination .page-item:nth-child(${e.to + 1})`).classList.add('active');
+        });
+        
+        // Add click listener to custom pagination
+        paginationList.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const slideTo = parseInt(this.getAttribute('data-bs-slide-to'));
+                tableCarouselInstance.to(slideTo);
+            });
+        });
+    }
+
+    // --- EXAMPLE DATA FOR DEMONSTRATION ---
+    const columnFields = ["ID", "Name", "Value", "Status"];
+    
+    // Create 45 dummy data points (to demonstrate 3 pages of 20 results each)
+    const mockData = Array.from({ length: 45 }, (_, i) => ({
+        id: i + 1,
+        name: `Item_${i + 1}`,
+        value: (Math.random() * 100).toFixed(2),
+        status: i % 3 === 0 ? 'Active' : i % 3 === 1 ? 'Pending' : 'Closed'
+    }));
+
+    // Call the function to build the carousel when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        mountTableCarousel(columnFields, mockData);
+    });
+</script>
+
+<style>
+    /* --- Import Example Font-Face --- */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+    /* --- Custom Card Container Styles (Your main div) --- */
+    .custom-card {
+        /* Set Card Dimensions and Responsiveness */
+        width: 100%;
+        max-width: 900px; /* Wider card to comfortably hold a table */
+        margin-top: 10px;
+
+        /* Corner Radius and Border */
+        border-radius: 5px; /* Corner radius 5 px */
+        border: 1px solid black; /* Border 1 px black */
+        overflow: hidden;
+
+        /* Background Colors/Images */
+        background-color: #ffffff; /* Default background color */
+        /* To use a background image: */
+        /* background-image: url('path/to/your/image.jpg'); */
+        /* background-size: cover; */
+        /* background-position: center; */
+    }
+
+    /* --- Shadow Styling (Black/Bluer Black) --- */
+    .shadow-sm-black {
+        /* X-offset Y-offset Blur Spread Color (pure black shadow) */
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5), 0 6px 18px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    /* --- Header (Title/Description) Area Styles --- */
+    .card-header-styled {
+        padding: 15px;
+        background-color: #343a40; /* Dark header background */
+        color: #f8f9fa;
+        border-bottom: 1px solid #495057;
+    }
+
+    .card-title-styled {
+        /* font-face, color, font-size for title */
+        font-family: 'Roboto Mono', monospace;
+        color: #17a2b8; /* Cyan color */
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .card-description-styled {
+        /* font-face, color, font-size for description */
+        font-family: 'Roboto Mono', monospace;
+        color: #adb5bd; /* Light gray color */
+        font-size: 0.9rem;
+        font-weight: 400;
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+
+    /* --- Table and Body Styles --- */
+    .form-body-styled {
+        padding: 10px;
+        background-color: #f8f9fa; /* Light background for the table area */
+    }
+    
+    .custom-table-styled {
+        margin-bottom: 0;
+    }
+
+    .custom-thead-styled {
+        background-color: #e9ecef;
+    }
+
+    .custom-th-styled {
+        /* Font style for table headers */
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.9rem;
+        color: #212529;
+        font-weight: 700;
+    }
+    
+    .custom-td-styled {
+        /* Font style for table data */
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.85rem;
+        color: #495057;
+    }
+
+    /* --- Custom Pagination Styles --- */
+    .custom-pagination .page-item.active .custom-page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+    
+    .custom-pagination .custom-page-link {
+        font-family: 'Roboto Mono', monospace;
+        color: #007bff;
+        border: 1px solid #dee2e6;
+        cursor: pointer;
+    }
+</style>

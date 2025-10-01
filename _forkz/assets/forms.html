@@ -1,0 +1,281 @@
+<div class="container my-5">
+    
+    <div id="formCardCarousel" class="carousel slide" data-bs-ride="false">
+        
+        <div class="carousel-indicators">
+            </div>
+        
+        <div class="carousel-inner" id="formCarouselInner">
+            </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#formCardCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#formCardCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="d-flex justify-content-end mt-3 button-bar">
+        <button type="button" class="btn btn-secondary me-2" onclick="clearFormInputs()">Clear</button>
+        <button type="button" class="btn btn-danger me-2" onclick="cancelForm()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * Dynamically mounts form cards into a Bootstrap Carousel.
+     * @param {Array<Object>} fields_arr - An array of objects defining form steps (cards).
+     * Example structure: 
+     * [{ 
+     * title: "Step 1: Contact Info", 
+     * description: "Provide your basic details.", 
+     * fields: [
+     * { label: "Full Name", type: "text", name: "full_name" }, 
+     * { label: "Email", type: "email", name: "email" }
+     * ]
+     * }]
+     */
+    function mountForm(fields_arr) {
+        const carouselInner = document.getElementById('formCarouselInner');
+        const carouselIndicators = document.querySelector('.carousel-indicators');
+        
+        if (!carouselInner || !carouselIndicators) {
+            console.error("Carousel elements not found. Check your HTML IDs.");
+            return;
+        }
+
+        carouselInner.innerHTML = '';
+        carouselIndicators.innerHTML = '';
+
+        fields_arr.forEach((step, index) => {
+            const isActive = index === 0 ? 'active' : '';
+            
+            // --- 1. Create the Card Structure (Carousel Item) ---
+            const cardHtml = `
+                <div class="carousel-item ${isActive}">
+                    <div class="d-flex justify-content-center">
+                        <form class="custom-card shadow-sm-blue-dark">
+                            
+                            <div class="card-header-styled">
+                                <h3 class="card-title-styled">${step.title}</h3>
+                                <span></span>
+                                <h4 class="card-description-styled">${step.description}</h4>
+                            </div>
+
+                            <div class="card-body form-body-styled">
+                                ${step.fields.map(field => `
+                                    <div class="mb-3">
+                                        <label for="${field.name}-${index}" class="form-label custom-label-styled">
+                                            ${field.label}
+                                        </label>
+                                        <input type="${field.type}" 
+                                               class="form-control custom-input-styled" 
+                                               id="${field.name}-${index}" 
+                                               name="${field.name}"
+                                               required>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="card-footer-styled d-none">
+                                <a href="#" class="card-link-styled">Form Card</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            `;
+            carouselInner.insertAdjacentHTML('beforeend', cardHtml);
+
+            // --- 2. Create the Indicator Button ---
+            const indicator = `
+                <button type="button" 
+                        data-bs-target="#formCardCarousel" 
+                        data-bs-slide-to="${index}" 
+                        class="${isActive}" 
+                        aria-current="${isActive ? 'true' : 'false'}" 
+                        aria-label="Slide ${index + 1}">
+                </button>
+            `;
+            carouselIndicators.insertAdjacentHTML('beforeend', indicator);
+        });
+
+        // Initialize the Bootstrap Carousel after mounting the content
+        new bootstrap.Carousel(document.getElementById('formCardCarousel'));
+    }
+
+    // --- Example Data to Mount the Form ---
+    const formData = [
+        {
+            title: "Step 1: Personal Info",
+            description: "Tell us about yourself.",
+            fields: [
+                { label: "Full Name", type: "text", name: "user_name" },
+                { label: "Date of Birth", type: "date", name: "user_dob" }
+            ]
+        },
+        {
+            title: "Step 2: Address Details",
+            description: "Where can we reach you?",
+            fields: [
+                { label: "Street Address", type: "text", name: "street_address" },
+                { label: "City/Zip Code", type: "text", name: "city_zip" }
+            ]
+        },
+        {
+            title: "Step 3: Account Credentials",
+            description: "Set up your login details.",
+            fields: [
+                { label: "Username", type: "text", name: "username" },
+                { label: "Password", type: "password", name: "password" }
+            ]
+        }
+    ];
+
+    // --- Form Button Actions ---
+    function clearFormInputs() {
+        const currentForm = document.querySelector('.carousel-item.active form');
+        if (currentForm) {
+            currentForm.reset();
+            alert('Current form card cleared.');
+        }
+    }
+    
+    function cancelForm() {
+        if (confirm('Are you sure you want to cancel and clear ALL form data?')) {
+            document.querySelectorAll('form.custom-card').forEach(form => form.reset());
+            // Optionally redirect the user or hide the form
+            alert('Form cancelled and all data cleared.');
+        }
+    }
+
+    function submitForm() {
+        // Collect all data from all forms in the carousel
+        let allData = {};
+        let isValid = true;
+
+        document.querySelectorAll('form.custom-card').forEach(form => {
+            const formData = new FormData(form);
+            for (let [name, value] of formData) {
+                // Simple check for required fields (you'd need better validation)
+                if (form.querySelector(`[name="${name}"][required]`) && !value) {
+                    isValid = false;
+                }
+                allData[name] = value;
+            }
+        });
+
+        if (isValid) {
+            console.log('Form Submitted with Data:', allData);
+            alert('Form submission successful! Check the console for data.');
+            // Add AJAX submission logic here
+        } else {
+            alert('Please fill out all required fields on all steps before submitting.');
+        }
+    }
+
+
+    // Call the function to build the carousel when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        mountForm(formData);
+    });
+</script>
+
+<style>
+    /* --- Import Example Font-Face --- */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    /* --- Custom Card Container Styles (The Form) --- */
+    .custom-card {
+        /* Set Card Dimensions and Responsiveness */
+        width: 100%;
+        max-width: 450px; /* Limits the max size of the card */
+        
+        /* Corner Radius and Border */
+        border-radius: 5px; /* Corner radius 5 px */
+        border: 1px solid black; /* Border 1 px black */
+        overflow: hidden;
+
+        /* Background Colors/Images */
+        background-color: #f8f9fa; /* Light background color for the form card */
+        /* To use a background image: */
+        /* background-image: url('path/to/your/image.jpg'); */
+        /* background-size: cover; */
+        /* background-position: center; */
+    }
+
+    /* --- Shadow Styling (Bluer Black Color) --- */
+    .shadow-sm-blue-dark {
+        /* X-offset Y-offset Blur Spread Color (dark blue-ish black) */
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 20, 0.4), 0 6px 15px 0 rgba(0, 0, 20, 0.3);
+    }
+
+    /* --- Header (Title/Description) Area Styles --- */
+    .card-header-styled {
+        padding: 15px;
+        background-color: #e9ecef; /* Slightly darker header background */
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-title-styled {
+        /* font-face, color, font-size for title {{_data.title}} */
+        font-family: 'Poppins', sans-serif;
+        color: #007bff; /* Primary blue color */
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .card-description-styled {
+        /* font-face, color, font-size for description <h4>{{_data.description}}</h4> */
+        font-family: 'Poppins', sans-serif;
+        color: #6c757d; /* Muted color */
+        font-size: 1rem;
+        font-weight: 400;
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+
+    /* --- Form Body and Field Styles --- */
+    .form-body-styled {
+        padding: 20px;
+        background-color: #ffffff; /* White background for the form fields area */
+    }
+
+    .custom-label-styled {
+        /* Font style for form labels */
+        font-family: 'Poppins', sans-serif;
+        color: #343a40;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    
+    .custom-input-styled {
+        /* Font style for input text */
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        color: #495057;
+        /* Optional: Add custom border/focus styles if needed */
+    }
+
+    /* --- Carousel Controls Customization --- */
+    #formCardCarousel .carousel-control-prev,
+    #formCardCarousel .carousel-control-next {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        width: 40px;
+        height: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.7;
+    }
+    
+    #formCardCarousel .carousel-indicators button {
+        background-color: #007bff;
+    }
+</style>

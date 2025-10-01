@@ -1,0 +1,134 @@
+<style>
+    /* --- Import Example Font-Face --- */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    /* --- Custom Card Container Styles (Your main div) --- */
+    .custom-card {
+        /* Set Card Dimensions and Responsiveness */
+        width: 100%;
+        max-width: 350px; /* Limits the max size of the card */
+        margin-bottom: 20px; /* Space below the card */
+
+        /* Corner Radius and Border */
+        border-radius: 5px; /* Corner radius 5 px */
+        border: 1px solid black; /* Border 1 px black */
+        overflow: hidden; /* Ensures corner radius applies correctly */
+
+        /* Background Colors/Images */
+        background-color: #ffffff; /* Default background color */
+        /* Use the following for a background image: */
+        /* background-image: url('path/to/your/image.jpg'); */
+        /* background-size: cover; */
+        /* background-position: center; */
+    }
+
+    /* --- Shadow Styling (Bluer Black Color) --- */
+    .shadow-sm-blue-dark {
+        /* X-offset Y-offset Blur Spread Color (dark blue-ish black) */
+        box-shadow: 0 5px 15px 0 rgba(0, 0, 20, 0.4), 0 8px 25px 0 rgba(0, 0, 20, 0.3);
+    }
+
+    /* --- Header (Title/Description) Area Styles --- */
+    .card-header-styled {
+        padding: 15px;
+        background-color: #f1f1f1; /* Light header background */
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-title-styled {
+        /* Font style for {{_data.title}} */
+        font-family: 'Montserrat', sans-serif;
+        color: #007bff; /* Bright blue color */
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .card-description-styled {
+        /* Font style for <h4>{{_data.description}}</h4> */
+        font-family: 'Montserrat', sans-serif;
+        color: #6c757d; /* Muted gray color */
+        font-size: 1.0rem;
+        font-weight: 400;
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+
+    /* --- List Item Styles (for the <ul>) --- */
+    .custom-list-item {
+        /* Font style for list items */
+        font-family: 'Montserrat', sans-serif;
+        color: #343a40; /* Dark text color */
+        font-size: 1.1rem;
+    }
+    
+    /* --- Footer/Link Styles --- */
+    .card-footer-styled {
+        padding: 15px;
+        background-color: #f8f9fa; /* Slightly off-white footer background */
+        text-align: right;
+    }
+
+    .card-link-styled {
+        /* Link <a> style */
+        font-family: 'Montserrat', sans-serif;
+        color: #28a745; /* Green link color */
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+    
+    .card-link-styled:hover {
+        text-decoration: underline;
+    }
+
+    /* --- Carousel Controls Customization (Optional, for better visibility) --- */
+    .carousel-control-prev,
+    .carousel-control-next {
+        /* Adjust control position */
+        width: 10%;
+        opacity: 0.8;
+    }
+</style>
+
+<div class="container my-5">
+    <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-center">
+                    
+                    <div class="custom-card shadow-sm-blue-dark mx-2">
+                        
+                        <div class="card-header-styled">
+                            <h3 class="card-title-styled">{{_data.title}}</h3>
+                            <span class="d-block"></span>
+                            <h4 class="card-description-styled">{{_data.description}}</h4>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item custom-list-item">Carousel Feature 1</li>
+                            <li class="list-group-item custom-list-item">Carousel Feature 2</li>
+                            <li class="list-group-item custom-list-item">Carousel Feature 3</li>
+                        </ul>
+
+                        <div class="card-footer-styled">
+                            <a href="{{_data.uri}}" class="card-link-styled">Visit Page</a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
