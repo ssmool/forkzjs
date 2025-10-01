@@ -23,7 +23,7 @@ It supports class‑based customization, letting you style output as you like wh
 7. [Quotes & Inspiration](#quotes--inspiration)
 8. [Happy New Year 2026 & Acknowledgments](#happy-new-year-2026--acknowledgments)
 9. ![FORKZ WWW SERVER - EXECUTE YOUR FORKZ_GENAIX WEBSITE LOCAL](./_forkz/www_forkz/)
-10. ![FORKZGENAI - ROADMAP - Generate Automatic Websites with FORKZ and FORKZGENAI by CLI](./_forkz/forkz_genaix/readme.md)
+10. ![FORKZGENAI - ROADMAP - Generate Automatic Websites with FORKZ and FORKZGENAI by CLI](./_forkz/forkz_genaix/)
 
 ---
 
