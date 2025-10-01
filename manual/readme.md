@@ -1,4 +1,4 @@
-![FORKZJS](.//assets/forksjs.jpg)
+![FORKZJS](../assets/forksjs.jpg)
 # ForkzJS (*Forkz*)
 
 > Developed by **#asytrick**
