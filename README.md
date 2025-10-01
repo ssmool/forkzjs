@@ -1,6 +1,6 @@
-![Yoda](./assets/yoda.png)
+![FORKZJS](.//assets/forksjs.jpg)
 
-# ForkzJS (aka *Forkz*)
+# ForkzJS (*Forkz*)
 
 > Developed by **#asytrick**
 > E‑mail: [eusmool@gmail.com](mailto:eusmool@gmail.com)
