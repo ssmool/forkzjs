@@ -1,5 +1,4 @@
 ![FORKZJS](.//assets/forksjs.jpg)
-
 # ForkzJS (*Forkz*)
 
 > Developed by **#asytrick**
@@ -248,6 +247,4 @@ Happy New Year **2026** coming soon! May your code be robust, your designs elega
 This project is developed by **#asytrick**
 Contact: [eusmool@gmail.com](mailto:eusmool@gmail.com)
 
----
-
-If you like, I can also generate a ready‑to‑use `examples/` folder (HTML files for JSON, XML, CSV, RSS) and place the image of Yoda in `./assets/yoda.png` for you. Do you want me to build that and send you the files?
+![YODA-JEDI](.//assets/yoda.jpg)
