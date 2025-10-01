@@ -1,0 +1,54 @@
+<div _forkz_lib='catalag_books'>        
+        <div _forkx='_book' class="book-item">
+            [CAPTION]: <h3>{{_book.title}}</h3>
+        </div>
+</div>
+
+<!-- using forkz_lib for json catalog -->
+<ul _forkz_lib='catalag_movies' class="movie-list">
+<!-- using forks for repeate nodes of json catalog -->        
+        <li _forkx='_data'>
+          <!-- using use {{_data.nodeName}} to echo the value of node item list -->        
+            [CAPTION]: <strong>{{_data.title}}</strong> ({{_data.year}})
+        </li>
+</ul>
+<!--adding forkz_lib.js -->
+<script src="forkz_lib.js">
+  __data = forkz_remote(_uri,_type='json')
+  
+</script>
+
+Used for bind <div> tags or <ul> and <li> tags
+_forkz_lib='catalag_movies' #to set the main node of json file
+_forkx='__data' #to set the fetch __data parsed by forkz_remote()
+{{__data.childNodes}} # to echo the value of chiledNodes on the __data 
+
+chatgpt write a readme.md for github.com/ssmool/forkz, 
+
+Write abour ForkzJS - its a like a JSON/XML/CSV/RSS rendering lists of content by your HTML file itering over DOM TAG <div> and <ul> lists, offers by class attributes customization for apply better design to your develop.
+
+How to use:
+
+Add forkzjs.js with <script src='forkzjs.js'></script>
+Calling the fetch() javascript remote function by:
+<script>forkz_remote(_uri,_type='json')</script>
+Use TAGS attributes to set json node to works with while rendering:
+_forkz_lib='json_ǹode' on the <DIV> or <ul>
+Use attributes _fork='__data' on the <li> DOM TAG
+
+create a example by use with csv, json, xml, rss with divs and ul tags by HTML page
+
+create a manual users guide
+
+create a git install bash window for install forkzjs
+
+quotes this is developer by #asytrick
+e-mail:eusmool@gmail.com
+
+insert a picture of yoda on the ./assets
+
+create a quotes about the Sub Microsystem and your versions of Java like J2SE, J2ME, J2SP and JavaFX. Quotes Javascript like a player of W3C and powerfull paradigm for developers embbed yours algorithms on the WWW softwares for Internet Browsers.
+
+quotes anything like a starwars mind by yoda
+
+happy a new year 2026 comming soon and strong toghter - kawabanaga
