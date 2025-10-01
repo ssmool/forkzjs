@@ -14,7 +14,7 @@ read -p "Enter the TCP port to run the web server on (default: 8080): " _forkzpo
 _forkzport=${_forkzport:-8080}
 
 # Ask for TCP port
-read -p "Enter the file.zip FORKZ GENAI WEBSITE to deploy: " _forkz_pkg
+read -p "Enter the file.zip FORKZ PACKAGE to deploy: " _forkz_pkg
 _forkz_pkg=${__forkz_pkg:www.zip}
 
 # Check if forkz.zip exists
