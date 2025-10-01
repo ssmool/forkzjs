@@ -14,21 +14,6 @@ It supports class‑based customization, letting you style output as you like wh
 
 ### ✅ HOW TO USE:
 
-1. Asks for a TCP port (`_forkzport`)
-2. Asks for a FORKZ PKG(www.zip) (`_forkzport`)
-3. Unzips `forkz.zip` into `forkz_www/`
-4. Serves the unzipped site via `python3 -m http.server $_forkzport`
-
-
-# Launch server
-echo "🚀 Starting server at http://localhost:$_forkzport"
-
-```bash
-python3 -m http.server "$_forkzport"
-```
-
-## 🧪 How to Configure It
-
 ### 1. Place this file next to `forkz.zip`
 
 ```bash
@@ -37,18 +22,19 @@ python3 -m http.server "$_forkzport"
 └── forkz_www.sh
 ```
 
-### 2. Run it
+### 2. Launch Server
 
 ```bash
 chmod +x forkz_www.sh
 ./forkz_www.sh
 ```
 
-### 3. Follow prompts:
+### 3. HOW TO USE - input the ask for server is started success:
 
-* Enter a port (e.g. `8080`, `3000`)
-* Enter a .zip file name (e.g. `8080`, `3000`)
-* It will unzip and start the server
+1. Asks for a TCP port (`_forkzport`)
+2. Asks for a FORKZ PKG(www.zip) (`_forkzport`)
+3. Unzips `forkz.zip` into `forkz_www/`
+4. Serves the unzipped site via `python3 -m http.server $_forkzport`
 
 ---
 
