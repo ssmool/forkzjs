@@ -229,6 +229,32 @@ Adopt semantic versioning (e.g. `v0.1.0`, `v1.0.0`) and include a `LICENSE` file
 
 ---
 
+# 🛣️ ForkzJS Project Roadmap
+
+**Repository:** [github.com/ssmool/forkzjs](https://github.com/ssmool/forkzjs)
+**Lead Developer:** #asytrick
+**Contact:** [eusmool@gmail.com](mailto:eusmool@gmail.com)
+
+## 🧩 Vision
+
+> **ForkzJS** evolves into a **Sub Microsystem** frontend generator:
+> Minimal HTML + JSON/CSV + scripts → Full responsive, data-driven web pages with zero framework overhead.
+
+---
+
+## 📅 Roadmap Overview
+
+| Milestone | Description                                                                 |
+| --------- | --------------------------------------------------------------------------- |
+| `v0.2.0`  | Basic scaffolding: init project, create folder structure, include templates |
+| `v0.3.0`  | Form generator from JSON schema                                             |
+| `v0.4.0`  | CSV + JSON merger: bind prompts with values                                 |
+| `v0.5.0`  | Auto CSS file generator & class binding                                     |
+| `v0.6.0`  | Complete page generator from JSON + CSS + CSV                               |
+| `v1.0.0`  | CLI interactive mode + plugin-ready system                                  |
+
+---
+
 ## Quotes & Inspiration
 
 > “Wars not make one great.” — Yoda
