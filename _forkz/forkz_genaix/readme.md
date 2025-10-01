@@ -1,223 +1,198 @@
----
+## forkz_genaix
 
-# 🛣️ ROADMAP: ForkzJS Website Generator
+![FORKZJS](../../assets/forksjs.jpg)
+# ForkzWWW (*Forkz*)
 
-## 🚀 GOAL
+> Developed by **#asytrick**
+> E‑mail: [eusmool@gmail.com](mailto:eusmool@gmail.com)
 
-Automatically generate **HTML websites** from **structured data files** (`.json`, `.csv`, `.xml`, `.rss`) using `forkzjs`, Bootstrap, JS plugins, and CLI prompts — with built-in content scaffolding, search, media integration, and export to `.zip`.
+“Do or do not. There is no try.” — Yoda
 
----
+ForkzJS is a small JavaScript micro‑renderer that takes structured data (JSON, XML, CSV, RSS) and binds it into your HTML, iterating over DOM tags like `<div>` or `<ul>`, using custom attributes to drive the binding logic. You supply the template in HTML, and ForkzJS fills it with your data.
 
-## 🧱 PHASE 1: Core Foundation
+It supports class‑based customization, letting you style output as you like while the library merely handles data insertion.
 
-### ✅ 1. Modular Architecture
-
-* ✅ Organize core modules in `/modules/`
-
-  * `_forkz_lib.js`
-  * `_forkz_skafolding.js`
-  * `_forkz_searchbar.js`
-  * `_forkz_css_auto.js`
-  * `_forkz_mock.js`
-
-### ✅ 2. Data Source Support
-
-* Support fetching and parsing:
-
-  * `.json`
-  * `.csv` → via CSV parser to JSON
-  * `.xml`, `.rss` → via XML DOM parser
-* Implement in `forkz_remote()` (already partially supported)
-
-### ✅ 3. Settings File
-
-Create `forkz.config.json`:
-
-```json
-{
-  "theme": "bootstrap",
-  "output": "website/",
-  "dataSource": "data/sample.json",
-  "layout": "list+form+search",
-  "title": "My Website"
-}
-```
+**Generate dynamic HTML web pages from data files (JSON, XML, CSV, RSS) with search, media integration, and deploy-ready ZIP packages — all through terminal or PowerShell.**
 
 ---
 
-## 🎨 PHASE 2: Styling & Visuals
+## 📦 What is `forkz_genaix.sh`?
 
-### ✅ 4. Bootstrap Integration
+`forkz_genaix.sh` is a shell script tool that automates the creation of interactive, data-driven HTML web pages from local or online data sources like `.json`, `.csv`, `.xml`, and `.rss`. It also supports embedded media content from platforms like **YouTube**, **Giphy**, and **Flickr**, based on keyword prompts.
 
-* Add Bootstrap 5 CDN to all generated HTML pages
-
-```html
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-```
-
-### ✅ 5. Sample CSS Theme
-
-* `_forkz_css_auto.js` should generate modern styles for:
-
-  * `.card`
-  * `.form-control`
-  * `.btn`
-  * `.container`
-* Output `style.css` and include in generated HTML
-
-### ✅ 6. JS Plugins (Optional UI Enhancements)
-
-Integrate:
-
-* [AOS.js](https://michalsnik.github.io/aos/) (scroll animations)
-* [Lightbox2](https://lokeshdhakar.com/projects/lightbox2/) for image galleries
-* [Fancybox](https://fancyapps.com/) for videos/images
-* [Chart.js](https://www.chartjs.org/) for visual data
+The script outputs a deployable `.zip` file ready for use with the `www_forks` HTTP web server.
 
 ---
 
-## ⚙️ PHASE 3: CLI Tool
+## ✨ Features
 
-### ✅ 7. `forkz-cli.sh` or `forkz-cli.js`
+- Generate static HTML from structured data
+- Support for `JSON`, `CSV`, `XML`, and `RSS`
+- Embed media from YouTube, Giphy, and Flickr by keyword search
+- Multiple layout formats: `list`, `cards`, `forms`, `dashboard`
+- Optional toolbar search and media library
+- Export to `.zip` for quick web deployment
+- Launch with `forkz_www.sh` HTTP server
 
-CLI prompts:
+---
+
+## 🚀 Quick Start Guide
+
+### 1️⃣ Run the Generator
+
+Use a terminal (Linux/macOS) or PowerShell (Windows):
 
 ```bash
-$ ./forkz-cli.sh
-> Select data source: [json, csv, xml, rss]
-> Enter file path: ./data/mydata.csv
-> Choose layout: [list, cards, forms, dashboard]
-> Add search? [y/N]
-> Add images/videos? [y/N]
-> Generate ZIP? [y/N]
+./forkz_genaix.sh
+````
+
+### 2️⃣ Register Project Name
+
+> Enter a unique name for your project
+> Use **lowercase letters** and **no spaces**
+
+```
+Enter your project name (e.g. myproject):
 ```
 
-CLI generates:
+### 3️⃣ Choose Your Layout Format
 
-* A complete folder: `/website_output/`
-* Includes: HTML, CSS, JS, assets, data, etc.
-* Optional: `website_output.zip`
+> Select how the data will be displayed
+> Options: `list`, `cards`, `forms`, `dashboard`
+> Default: `list`
 
-### 🧠 Future: Add `node.js` version for cross-platform support.
+```
+Choose layout format [list/cards/forms/dashboard]:
+```
+
+### 4️⃣ Add Search Toolbar?
+
+```
+Enable search toolbar on your page? [y/n]:
+```
+
+### 5️⃣ Add Media Library?
+
+> Includes search prompts for **YouTube**, **Giphy**, **Flickr**
+
+```
+Add media content library to page? [y/n]:
+```
+
+### 6️⃣ Generate Deployable ZIP?
+
+```
+Generate forkz.zip for web deployment? [y/n]:
+```
+
+### 7️⃣ Check ZIP Output
+
+After completion, ensure your `.zip` file was generated:
+
+```
+forkz_project.zip created successfully.
+```
 
 ---
 
-## 🧩 PHASE 4: Content Management Prompt (AI-Enhanced)
+## 🌐 Deploy Online
 
-### ✅ 8. Prompt Content Manager (via CLI or TUI)
-
-#### Features:
-
-* Add/search/edit:
-
-  * 📝 Text (e.g., blog post, description)
-  * 📁 Files (attach docs or .pdf)
-  * 🎥 Videos (YouTube URLs or mp4)
-  * 🖼️ Images (from folder or URL)
-* Optional AI-generated placeholders:
-
-  * `ai_generate_image("modern dashboard")`
-  * `ai_write_text("intro for product catalog")`
+Use the built-in `forkz_www.sh` server to host your project:
 
 ```bash
-> Add content [text/image/video/file]
-> Describe your section: "Modern portfolio grid"
-> AI design a layout? [Y/n]
-> Add to homepage? [Y/n]
+./forkz_www.sh
 ```
+
+Then follow prompts:
+
+* Select your server port (e.g. 8080)
+* Select the `forkz_project.zip` file
+* The project will auto-extract and serve in your browser
 
 ---
 
-## 📦 PHASE 5: Output + Export
-
-### ✅ 9. Generate Static Website
-
-Output structure:
-
-```
-/website_output/
-├── index.html
-├── assets/
-│   ├── style.css
-│   ├── images/
-│   └── plugins/
-├── data/
-│   └── sample.json
-├── js/
-│   └── forkz_modules.js
-└── README.html
-```
-
-### ✅ 10. ZIP Export
-
-* Auto-zip the generated site:
+## 🧪 Example Usage
 
 ```bash
-zip -r website_output.zip website_output/
+./forkz_genaix.sh
 ```
 
----
+**Example input when prompted:**
 
-## 📚 PHASE 6: Documentation & Templates
+```
+Enter your project name: weatherdashboard
+Choose layout format: dashboard
+Enable search toolbar? y
+Add media content library? y
+Generate forkz.zip? y
+```
 
-### ✅ 11. Templates & Themes
+**Example Data URIs (Comma-separated):**
 
-* Provide `templates/` folder with:
+```
+https://example.com/data1.json;https://example.com/data2.xml
+```
 
-  * `minimal.html`
-  * `form-builder.html`
-  * `dashboard.html`
-  * `card-grid.html`
+After the script runs, verify that `weatherdashboard.zip` is created.
 
-### ✅ 12. GitHub Pages Deployment
-
-* Allow `forkz-cli` to deploy directly to GitHub Pages:
+Deploy:
 
 ```bash
-$ ./forkz-cli.sh --deploy-gh
+./forkz_www.sh
+```
+
+Then choose port `9090`, and select `weatherdashboard.zip`. Open your browser:
+
+```
+http://localhost:9090
 ```
 
 ---
 
-## 🧠 BONUS: Future AI Extensions
+## 📁 Supported Data Formats
 
-* `ai_suggest_layout(data.json)` → recommend Bootstrap layouts
-* `ai_autosummarize(content.txt)` → create landing page intros
-* `ai_generate_style(themeName)` → propose CSS variables
-
----
-
-# ✅ Final Deliverable
-
-### 📁 Output: `website_output.zip` includes:
-
-* Dynamic HTML files with:
-* Data visualizations
-* Forms and search
-* Styled content
-* Bootstrap + Plugins
-* Mock/fake or real content
-* Media (images, videos)
-* Clean, modern design
-* Deploy-ready package
+* `.json`
+* `.csv`
+* `.xml`
+* `.rss`
 
 ---
 
-## 📌 Summary Table
+## 🎥 Supported Media Platforms
 
-| Feature                      | Tool / File            | Status      |
-| ---------------------------- | ---------------------- | ----------- |
-| JSON/CSV/XML parsing         | `_forkz_lib.js`        | ✅ Done      |
-| HTML scaffolding (list/form) | `_forkz_skafolding.js` | ✅ Done      |
-| Search bar                   | `_forkz_searchbar.js`  | ✅ Done      |
-| CSS generation               | `_forkz_css_auto.js`   | ✅ Done      |
-| Mock data                    | `_forkz_mock.js`       | ✅ Done      |
-| Bootstrap visual             | Bootstrap 5            | ✅ Planned   |
-| JS plugins (lightbox, etc)   | AOS.js, Fancybox, etc  | ⏳ Optional  |
-| CLI to generate sites        | `forkz-cli.sh` / `.js` | 🛠️ In Plan |
-| Prompt-based content manager | Terminal prompt + AI   | 🧠 In Plan  |
-| Export to .zip               | CLI zip                | ✅ Easy      |
-| GitHub Pages deployment      | `gh-pages` branch      | ✅ Easy      |
+* **YouTube**
+* **Giphy**
+* **Flickr**
+
+Search media content by prompt keywords, and add them directly into your project gallery.
+
+---
+
+## 🛠 Requirements
+
+* Unix-like shell or PowerShell
+* `bash` (for Linux/macOS)
+* Internet connection (for web URIs and media search)
+* Permissions to execute `.sh` scripts
+
+---
+
+## 📃 License
+
+MIT License © [ssmool](https://github.com/ssmool)
+
+---
+
+## 🤝 Contributions
+
+Pull requests and feature ideas are welcome! Please open an issue first to discuss what you'd like to change.
+
+---
+
+## 🔗 Related
+
+* `forkz_www.sh` – Local web server for ZIP project deployment
+* `forkzjs` – JavaScript utilities used inside generated HTML
 
 ---
 
