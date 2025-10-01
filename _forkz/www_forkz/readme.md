@@ -1,4 +1,18 @@
-### ✅ Features:
+![FORKZJS](../../assets/forksjs.jpg)
+# ForkzWWW (*Forkz*)
+
+> Developed by **#asytrick**
+> E‑mail: [eusmool@gmail.com](mailto:eusmool@gmail.com)
+
+“Do or do not. There is no try.” — Yoda
+
+ForkzJS is a small JavaScript micro‑renderer that takes structured data (JSON, XML, CSV, RSS) and binds it into your HTML, iterating over DOM tags like `<div>` or `<ul>`, using custom attributes to drive the binding logic. You supply the template in HTML, and ForkzJS fills it with your data.
+
+It supports class‑based customization, letting you style output as you like while the library merely handles data insertion.
+
+### ForkzWWW - A simple webserver for web pages created by FORKZGENAIX:
+
+### ✅ HOW TO USE:
 
 1. Asks for a TCP port (`_forkzport`)
 2. Asks for a FORKZ PKG(www.zip) (`_forkzport`)
@@ -13,7 +27,7 @@ echo "🚀 Starting server at http://localhost:$_forkzport"
 python3 -m http.server "$_forkzport"
 ```
 
-## 🧪 How to Use It
+## 🧪 How to Configure It
 
 ### 1. Place this file next to `forkz.zip`
 
