@@ -5,21 +5,19 @@
 3. Unzips `forkz.zip` into `forkz_www/`
 4. Serves the unzipped site via `python3 -m http.server $_forkzport`
 
----
 
 # Launch server
 echo "🚀 Starting server at http://localhost:$_forkzport"
+
+``bash
 python3 -m http.server "$_forkzport"
-
 ```
-
----
 
 ## 🧪 How to Use It
 
 ### 1. Place this file next to `forkz.zip`
 
-```
+```bash
 /your-folder/
 ├── forkz.zip
 └── forkz_www.sh
@@ -35,6 +33,7 @@ chmod +x forkz_www.sh
 ### 3. Follow prompts:
 
 * Enter a port (e.g. `8080`, `3000`)
+* Enter a .zip file name (e.g. `8080`, `3000`)
 * It will unzip and start the server
 
 ---
