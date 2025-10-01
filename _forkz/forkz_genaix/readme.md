@@ -1,4 +1,14 @@
----
+![FORKZJS](../../assets/forksjs.jpg)
+# ForkzJS (*Forkz*)
+
+> Developed by **#asytrick**
+> E‑mail: [eusmool@gmail.com](mailto:eusmool@gmail.com)
+
+“Do or do not. There is no try.” — Yoda
+
+ForkzJS is a small JavaScript micro‑renderer that takes structured data (JSON, XML, CSV, RSS) and binds it into your HTML, iterating over DOM tags like `<div>` or `<ul>`, using custom attributes to drive the binding logic. You supply the template in HTML, and ForkzJS fills it with your data.
+
+It supports class‑based customization, letting you style output as you like while the library merely handles data insertion.
 
 # 🛣️ ROADMAP: ForkzJS Website Generator
 
