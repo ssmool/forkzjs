@@ -22,8 +22,9 @@ It supports class‑based customization, letting you style output as you like wh
 6. [Developer Philosophy & Versioning](#developer-philosophy--versioning)
 7. [Quotes & Inspiration](#quotes--inspiration)
 8. [Happy New Year 2026 & Acknowledgments](#happy-new-year-2026--acknowledgments)
-9. ![FORKZ WWW SERVER - EXECUTE YOUR FORKZ_GENAIX WEBSITE LOCAL](./forks/www_forkz/)
-10.![FORKZGENAI - ROADMAP - Generate Automatic Websites with FORKZ and FORKZGENAI by CLI](./forks/forkz_genaix/readme.md)
+9. ![FORKZ WWW SERVER - EXECUTE YOUR FORKZ_GENAIX WEBSITE LOCAL](./_forkz/www_forkz/)
+10.![FORKZGENAI - ROADMAP - Generate Automatic Websites with FORKZ and FORKZGENAI by CLI](./_forkz/forkz_genaix/readme.md)
+
 ---
 
 ## Features
