@@ -1,5 +1,5 @@
 ![FORKZJS](../assets/forksjs.jpg)
-# ForkzJS (*Forkz*)
+### ForkzJS (*Forkz*) - MANUAL INSTRUCTIONS:
 
 > Developed by **#asytrick**
 > E‑mail: [eusmool@gmail.com](mailto:eusmool@gmail.com)
@@ -13,11 +13,13 @@ It supports class‑based customization, letting you style output as you like wh
 ---
 
 ````markdown
-# 🧬 forkzjs
+## 🧬 forkzjs
 
 **forkzjs** is a lightweight client-side JavaScript toolkit for parsing structured data (JSON, CSV, XML, RSS), generating HTML scaffolding (e.g., lists, forms), creating dynamic CSS, and adding search capabilities – all from declarative JavaScript.
 
 ---
+
+## 🚀 READ FORKZJS AI Developer - FOR KNOW A NOVEU AI GENAIX CREATE WEB APPLICATIONS BASED ON DATA FILES: ![FORKZJSAIDeveloper](FORKZJSAIDeveloper.MD)
 
 ## 📦 Included Modules
 
