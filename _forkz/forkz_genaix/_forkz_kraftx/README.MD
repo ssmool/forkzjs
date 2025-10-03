@@ -1,6 +1,6 @@
 ### FORKZ GENAIX
 
-![FORKZJS](../../assets/forksjs.jpg)
+![FORKZJS](../../../assets/forksjs.jpg)
 ### ForkzJS → forkz_genaix / kraftx Manual
 
 This manual describes how to integrate and use the the **forkz_genaix / kraftx** extensions in your ForkzJS‑based project. It covers how to include the scripts, the custom tags, configuration attributes, and related modules (feeds, forms, media, upload).
