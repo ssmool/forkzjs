@@ -1,3 +1,4 @@
+![FORKZJS](../assets/forksjs.jpg)
 ````markdown
 # FORKZJS – AI Developer Manual
 
@@ -604,6 +605,8 @@ chmod +x run_forkz_sample.sh
 * Browser opens automatically (Linux/macOS supported)
 
 ---
+
+![FORKZJS](../assets/main-qimg-ff13e07bf3f859e0806417ff4c2a3b13-lq.jpg)
 
 
 
