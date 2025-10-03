@@ -605,13 +605,5 @@ chmod +x run_forkz_sample.sh
 
 ---
 
-Let me know if you also want:
-
-* A **Docker version** of this script?
-* To specify your own JSON or port via arguments?
-* To bundle all this into a `.deb` or `.AppImage`?
-
-I'm happy to expand this further!
-
 
 
