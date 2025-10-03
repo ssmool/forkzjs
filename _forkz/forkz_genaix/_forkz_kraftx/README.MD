@@ -300,6 +300,3 @@ Here is a minimal example putting things together.
 * Validate media features (audio / video) across browsers; provide fallback when unsupported.
 
 ---
-
-If you like, I can convert this manual into a `README.md` suitable for your GitHub repo, or even generate skeleton code files for all the modules (`_forkz_kraftx.js`, `_forkz_kraftx_feed.js`, etc.) based on your spec. Would you prefer me to do that now?
-
