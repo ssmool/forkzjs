@@ -12,16 +12,14 @@ It supports class‑based customization, letting you style output as you like wh
 
 ---
 
-````markdown
-## 🧬 forkzjs
+### 🧬 forkzjs
 
 **forkzjs** is a lightweight client-side JavaScript toolkit for parsing structured data (JSON, CSV, XML, RSS), generating HTML scaffolding (e.g., lists, forms), creating dynamic CSS, and adding search capabilities – all from declarative JavaScript.
 
----
 
 ## 🚀 READ FORKZJS AI Developer - FOR KNOW A NOVEU AI GENAIX CREATE WEB APPLICATIONS BASED ON DATA FILES:
 
-[FORKZJS AI Noveu Developer - Manual](FORKZJSAIDeveloper.MD)
+[Manual:FORKZJS AI Noveu Developer](../manual/FORKZJSAIDeveloper.MD)
 
 ## 📦 Included Modules
 
