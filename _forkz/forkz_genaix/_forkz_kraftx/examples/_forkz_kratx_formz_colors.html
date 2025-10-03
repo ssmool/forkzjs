@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seletor de Cores Dinâmico</title>
+    <!-- Carrega o Tailwind CSS para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-menu {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+        }
+        .color-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .color-item:hover {
+            background-color: #f3f4f6;
+        }
+        .color-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Aplicador de Cores HTML</h1>
+
+        <!-- SEÇÃO PRINCIPAL DE CONTROLE -->
+        <div class="flex flex-col md:flex-row gap-6 mb-8">
+            
+            <!-- 1. PAINEL DE SELEÇÃO DE CORES (TOOLBAR/DROPDOWN) -->
+            <div class="relative w-full md:w-1/2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Selecione uma Cor</label>
+                <button id="dropdown-button" onclick="toggleDropdown()"
+                        class="w-full bg-white border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-left flex justify-between items-center hover:bg-gray-50 transition duration-150">
+                    <span id="selected-color-display" class="font-semibold text-gray-800 flex items-center">
+                        <span id="current-circle" class="color-circle bg-gray-200"></span>
+                        <span id="current-name">Nenhuma Cor Selecionada</span> 
+                    </span>
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu (Lista de Cores) -->
+                <div id="dropdown-list" class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-xl hidden dropdown-menu">
+                    <!-- Itens da lista serão injetados aqui -->
+                </div>
+            </div>
+
+            <!-- 2. PAINEL DE CONFIRMAÇÃO E APLICAÇÃO -->
+            <div class="w-full md:w-1/2 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">Aplicar Estilo</h2>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Aplicar a:</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="apply_target" value="background" checked class="form-radio text-indigo-600">
+                            <span class="ml-2 text-gray-700">Fundo (Background)</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="apply_target" value="text" class="form-radio text-indigo-600">
+                            <span class="ml-2 text-gray-700">Texto (Color)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button onclick="updateTargetBox()"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 shadow-md">
+                    Atualizar Estilos
+                </button>
+            </div>
+        </div>
+        
+        <!-- 3. CAIXA ALVO PARA APLICAÇÃO DE CORES -->
+        <div id="target-box" 
+             class="min-h-[200px] border-2 border-dashed border-gray-400 p-6 rounded-lg text-center flex items-center justify-center transition-all duration-300"
+             style="background-color: #e0e0e0; color: #333333;">
+            <p class="text-lg font-medium">
+                Esta é a caixa alvo. O texto e o fundo serão alterados com base na sua seleção e confirmação.
+            </p>
+        </div>
+        
+    </div>
+
+    <script>
+        // Dados de Cores (Simulação do resultado da navegação)
+        const colorData = [
+            // Campos: ColorNameHex, codeRGB, codeHS (HSL simulado), code (HEX)
+            { ColorNameHex: "Red", codeRGB: "rgb(255, 0, 0)", codeHS: "hsl(0, 100%, 50%)", code: "#FF0000" },
+            { ColorNameHex: "Green", codeRGB: "rgb(0, 128, 0)", codeHS: "hsl(120, 100%, 25%)", code: "#008000" },
+            { ColorNameHex: "Blue", codeRGB: "rgb(0, 0, 255)", codeHS: "hsl(240, 100%, 50%)", code: "#0000FF" },
+            { ColorNameHex: "Yellow", codeRGB: "rgb(255, 255, 0)", codeHS: "hsl(60, 100%, 50%)", code: "#FFFF00" },
+            { ColorNameHex: "Cyan", codeRGB: "rgb(0, 255, 255)", codeHS: "hsl(180, 100%, 50%)", code: "#00FFFF" },
+            { ColorNameHex: "Magenta", codeRGB: "rgb(255, 0, 255)", codeHS: "hsl(300, 100%, 50%)", code: "#FF00FF" },
+            { ColorNameHex: "Orange", codeRGB: "rgb(255, 165, 0)", codeHS: "hsl(39, 100%, 50%)", code: "#FFA500" },
+            { ColorNameHex: "Purple", codeRGB: "rgb(128, 0, 128)", codeHS: "hsl(300, 100%, 25%)", code: "#800080" },
+            { ColorNameHex: "Teal", codeRGB: "rgb(0, 128, 128)", codeHS: "hsl(180, 100%, 25%)", code: "#008080" },
+            { ColorNameHex: "Pink", codeRGB: "rgb(255, 192, 203)", codeHS: "hsl(330, 100%, 88%)", code: "#FFC0CB" },
+            { ColorNameHex: "Gold", codeRGB: "rgb(255, 215, 0)", codeHS: "hsl(51, 100%, 50%)", code: "#FFD700" },
+            { ColorNameHex: "Silver", codeRGB: "rgb(192, 192, 192)", codeHS: "hsl(0, 0%, 75%)", code: "#C0C0C0" },
+            { ColorNameHex: "Black", codeRGB: "rgb(0, 0, 0)", codeHS: "hsl(0, 0%, 0%)", code: "#000000" },
+            { ColorNameHex: "White", codeRGB: "rgb(255, 255, 255)", codeHS: "hsl(0, 0%, 100%)", code: "#FFFFFF" }
+        ];
+
+        let selectedColor = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDropdown();
+            // Inicializa com a cor White se não houver seleção
+            const whiteColor = colorData.find(c => c.ColorNameHex === "White") || colorData[0];
+            selectColor(whiteColor, false); 
+
+            // Fecha o dropdown se clicar fora
+            document.addEventListener('click', (e) => {
+                const dropdownList = document.getElementById('dropdown-list');
+                const dropdownButton = document.getElementById('dropdown-button');
+                if (dropdownList && !dropdownList.contains(e.target) && !dropdownButton.contains(e.target)) {
+                    dropdownList.classList.add('hidden');
+                }
+            });
+        });
+
+        function populateDropdown() {
+            const listContainer = document.getElementById('dropdown-list');
+            listContainer.innerHTML = ''; 
+
+            colorData.forEach(color => {
+                const item = document.createElement('div');
+                item.className = 'color-item';
+                item.setAttribute('data-color-hex', color.code);
+                item.onclick = () => {
+                    selectColor(color, true); 
+                    toggleDropdown(); 
+                };
+
+                // Conteúdo do item: Círculo + Nome + Código HEX
+                item.innerHTML = `
+                    <span class="color-circle" style="background-color: ${color.code};"></span>
+                    <span class="text-gray-700">${color.ColorNameHex}</span>
+                    <span class="ml-auto text-sm font-mono text-gray-500">#${color.code.substring(1)}</span>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function toggleDropdown() {
+            document.getElementById('dropdown-list').classList.toggle('hidden');
+        }
+
+        function selectColor(color, updateButtonDisplay = true) {
+            selectedColor = color;
+
+            if (updateButtonDisplay) {
+                // Atualiza o display do botão principal
+                document.getElementById('current-circle').style.backgroundColor = color.code;
+                document.getElementById('current-name').textContent = `${color.ColorNameHex} (#${color.code.substring(1)})`;
+            }
+            
+            console.log("Cor Selecionada:", selectedColor);
+        }
+
+        function updateTargetBox() {
+            if (!selectedColor) {
+                console.warn("Nenhuma cor selecionada.");
+                return;
+            }
+
+            const targetBox = document.getElementById('target-box');
+            const selectedTarget = document.querySelector('input[name="apply_target"]:checked').value;
+            const colorValue = selectedColor.code;
+            
+            if (selectedTarget === 'background') {
+                // Aplica a cor ao fundo
+                targetBox.style.backgroundColor = colorValue;
+                // Ajuste automático da cor do texto para contraste (muito simplificado)
+                const isLight = isColorLight(colorValue);
+                targetBox.style.color = isLight ? '#000000' : '#FFFFFF';
+
+                targetBox.querySelector('p').innerHTML = `Fundo atualizado para: <strong>${selectedColor.ColorNameHex}</strong><br> Código: ${colorValue}`;
+
+            } else if (selectedTarget === 'text') {
+                // Aplica a cor ao texto
+                targetBox.style.color = colorValue;
+                
+                targetBox.querySelector('p').innerHTML = `Texto atualizado para: <strong>${selectedColor.ColorNameHex}</strong><br> Código: ${colorValue}`;
+            }
+
+            console.log(`Aplicando ${colorValue} como ${selectedTarget}.`);
+        }
+
+        // Função utilitária para estimar se uma cor HEX é clara ou escura para contraste
+        function isColorLight(hex) {
+            const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                return r + r + g + g + b + b;
+            });
+
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            const r = parseInt(result[1], 16);
+            const g = parseInt(result[2], 16);
+            const b = parseInt(result[3], 16);
+
+            // Cálculo de Luminosidade (W3C)
+            const luminosity = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255; 
+            return luminosity > 0.5; // Retorna true se a cor for clara
+        }
+
+    </script>
+</body>
+</html>
+

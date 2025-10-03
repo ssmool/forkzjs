@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Filmes | forkz_lib</title>
+    <!-- Carrega o Tailwind CSS para estilização moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1f2937; /* Cinza escuro de fundo */
+            color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        .form-container {
+            background-color: #374151; /* Container mais claro */
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+        /* Estilos base para os campos gerados */
+        .forkz-input-base {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 2px solid #4b5563;
+            background-color: #1f2937;
+            color: #f9fafb;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .forkz-input-base:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+        }
+        .forkz-error {
+            color: #ef4444; /* Vermelho para erro */
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            min-height: 1.25rem; /* Evita Cumulative Layout Shift */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1 class="text-3xl font-bold mb-6 text-center text-indigo-400">
+            Formulário Dinâmico <span class="text-sm block font-normal text-gray-400">forkz_lib="catalag_movies"</span>
+        </h1>
+
+        <!-- O FORMULÁRIO COM OS ATRIBUTOS SOLICITADOS -->
+        <form autofill="yes" forkz_lib="catalag_movies" id="movie-form" class="space-y-5">
+            
+            <!-- Campo: Título do Filme -->
+            <label class="block text-sm font-medium text-gray-300">Título do Filme</label>
+            <forkz-field _forkx="title" _orkz_kraftz="input" forkxregx="texto" placeholder="Ex: A Grande Aventura"></forkz-field>
+
+            <!-- Campo: Ano de Lançamento -->
+            <label class="block text-sm font-medium text-gray-300">Ano de Lançamento</label>
+            <forkz-field _forkx="year" _orkz_kraftz="input" forkxregx="número" placeholder="Ex: 2024 (apenas dígitos)"></forkz-field>
+
+            <!-- Campo: Diretor (Sem validação customizada, apenas texto) -->
+            <label class="block text-sm font-medium text-gray-300">Nome do Diretor</label>
+            <forkz-field _forkx="director" _orkz_kraftz="input" forkxregx="texto" placeholder="Ex: Jane Doe"></forkz-field>
+
+            <!-- Campo: E-mail de Contato (Validação e-mail) -->
+            <label class="block text-sm font-medium text-gray-300">E-mail de Contato</label>
+            <forkz-field _forkx="email" _orkz_kraftz="input" forkxregx="e-mail" placeholder="seu.email@dominio.com"></forkz-field>
+
+            <!-- Campo: Senha do Administrador (Validação senha) -->
+            <label class="block text-sm font-medium text-gray-300">Senha Admin (Mínimo 8 caracteres)</label>
+            <forkz-field _forkx="password" _orkz_kraftz="password" forkxregx="senha" placeholder="********"></forkz-field>
+            
+            <!-- Campo: Gênero (Select com Options) -->
+            <label class="block text-sm font-medium text-gray-300">Gênero</label>
+            <div class="relative">
+                <select _forkx="genre" class="forkz-input-base" id="genre">
+                    <option value="" disabled selected>Selecione um Gênero</option>
+                    <option value="acao">Ação</option>
+                    <option value="drama">Drama</option>
+                    <option value="comedia">Comédia</option>
+                    <option value="ficcao">Ficção Científica</option>
+                </select>
+            </div>
+
+            <!-- Botão de Submissão -->
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-6">
+                Salvar Filme
+            </button>
+
+        </form>
+    </div>
+
+    <!-- Simulação da inclusão do forkzjs.js, que seria carregado no ambiente real -->
+    <script src="https://github.com/ssmool/forkzjs/forkzjs.js"></script>
+
+    <script>
+        // --- Custom Element para simular a tag <forkz> e sua lógica ---
+        class ForkzFormField extends HTMLElement {
+            constructor() {
+                super();
+                this.input = null;
+                this.errorElement = null;
+                this.regexMap = {
+                    'e-mail': /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                    'telefone': /^\(\d{2}\)\s?\d{4,5}-?\d{4}$/,
+                    'celular': /^\(\d{2}\)\s?9\d{4}-?\d{4}$/,
+                    'site': /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/,
+                    'número': /^\d+$/,
+                    'texto': /^\s*.+/, // Garante que não está vazio
+                    'senha': /^.{8,}$/, // Mínimo 8 caracteres
+                    'dinheiro': /^\d+(\,\d{2})?$/, // Simples para R$XX,YY
+                    'vazio': /.*/ // Aceita qualquer coisa, não é obrigatório
+                    // O valor padrão, se forkxregx não for fornecido, será "texto" para validação de não-vazio.
+                };
+            }
+
+            connectedCallback() {
+                this.render();
+                
+                // Adiciona listener para validação em tempo real
+                if (this.input) {
+                    this.input.addEventListener('blur', this.validate.bind(this));
+                    this.input.addEventListener('input', this.validate.bind(this));
+                }
+            }
+
+            // Mapeia o atributo forkxregx para a expressão regular ou usa uma expressão customizada
+            getRegex(regxKey) {
+                const regex = this.regexMap[regxKey];
+                
+                // 1. Regex de atalho
+                if (regex) {
+                    return regex;
+                }
+                
+                // 2. Tenta usar como regex customizada (analise léxica)
+                try {
+                    // Remove barras iniciais/finais se presentes (como em /^regex$/)
+                    let pattern = regxKey.startsWith('/') && regxKey.endsWith('/') 
+                                ? regxKey.slice(1, -1) 
+                                : regxKey;
+                    return new RegExp(pattern);
+                } catch (e) {
+                    console.error(`Regex inválida no atributo forkxregx: ${regxKey}`);
+                    return this.regexMap['texto']; // Retorna fallback para texto
+                }
+            }
+
+            validate() {
+                if (!this.input) return true;
+                
+                const value = this.input.value.trim();
+                const regxKey = this.getAttribute('forkxregx') || 'texto';
+                const required = regxKey !== 'vazio'; // Assume que 'vazio' desabilita a obrigatoriedade
+
+                this.errorElement.textContent = ''; // Limpa erro anterior
+                this.input.classList.remove('border-red-500');
+                
+                // 1. Validação de Vazio (se required)
+                if (required && value === '') {
+                    this.errorElement.textContent = 'Campo obrigatório não pode estar vazio.';
+                    this.input.classList.add('border-red-500');
+                    return false;
+                }
+                
+                // 2. Validação por Expressão Regular
+                if (value !== '') { // Só valida regex se tiver valor (o check de vazio é acima)
+                    const regex = this.getRegex(regxKey);
+                    
+                    if (!regex.test(value)) {
+                        let errorMessage = `Valor inválido. Esperado formato: ${regxKey.toUpperCase()}.`;
+                        this.errorElement.textContent = errorMessage;
+                        this.input.classList.add('border-red-500');
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            render() {
+                // Obtém atributos
+                const fieldName = this.getAttribute('_forkx');
+                const elementType = this.getAttribute('_orkz_kraftz') || 'input';
+                const placeholder = this.getAttribute('placeholder') || '';
+                
+                this.innerHTML = ''; // Limpa o conteúdo
+
+                // Cria o elemento de formulário (input, password, etc.)
+                this.input = document.createElement(elementType === 'password' ? 'input' : elementType);
+                this.input.className = 'forkz-input-base';
+                this.input.setAttribute('id', fieldName);
+                this.input.setAttribute('name', fieldName);
+                this.input.setAttribute('placeholder', placeholder);
+                
+                // Configura tipos específicos
+                if (elementType === 'input') {
+                    this.input.setAttribute('type', 'text');
+                } else if (elementType === 'password') {
+                    this.input.setAttribute('type', 'password');
+                }
+                // (Para select/checkbox/radio, o usuário teria que adicionar options/values no HTML, 
+                // mas focamos em input/password conforme o exemplo de atributos)
+                
+                this.appendChild(this.input);
+
+                // Cria o elemento de erro <h6>
+                this.errorElement = document.createElement('h6');
+                this.errorElement.className = 'forkz-error';
+                this.appendChild(this.errorElement);
+            }
+        }
+
+        // Define o Custom Element
+        customElements.define('forkz-field', ForkzFormField);
+
+        // --- Lógica de Submissão do Formulário ---
+        document.getElementById('movie-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isFormValid = true;
+            const fields = this.querySelectorAll('forkz-field');
+            
+            // Valida todos os campos antes de submeter
+            fields.forEach(field => {
+                if (!field.validate()) {
+                    isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                const formData = {};
+                
+                // Coleta dados válidos (simulando o forkz_remote data collection)
+                const formElements = this.elements;
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.name) {
+                        formData[element.name] = element.value;
+                    }
+                }
+                
+                console.log('Formulário VÁLIDO. Dados prontos para envio (JSON):', formData);
+                alert('Sucesso! Formulário válido. Dados coletados (Verifique o console para o JSON).');
+                
+            } else {
+                console.error('Formulário INVÁLIDO. Corrija os erros destacados.');
+                alert('Erro! Por favor, corrija os campos destacados em vermelho.');
+            }
+        });
+        
+    </script>
+</body>
+</html>

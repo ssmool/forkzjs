@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forks Krafter Menu System</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Set default font and background */
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 150vh; /* For floating examples */
+            background-color: #f7f9fb;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Base CSS for the Custom Component */
+        .forks_krafter {
+            padding: 0;
+            list-style: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            max-width: 300px;
+            z-index: 50;
+        }
+
+        /* --- POSITIONING STYLES (Controlled by JS) --- */
+        .krafter-float {
+            position: fixed;
+        }
+        .krafter-top-left { top: 1rem; left: 1rem; }
+        .krafter-top-right { top: 1rem; right: 1rem; }
+        .krafter-bottom-left { bottom: 1rem; left: 1rem; }
+        .krafter-bottom-right { bottom: 1rem; right: 1rem; }
+
+        /* --- VERTICAL/HORIZONTAL ORIENTATION --- */
+        .krafter-horizontal > ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .forks_krafter ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: inherit;
+        }
+
+        .forks_krafter li {
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+        .forks_krafter a, .krafter-item-content {
+            display: block;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        /* --- COLLAPSE/SUBMENU STYLES --- */
+
+        /* Vertical Submenu Default */
+        .forks_krafter li > ul {
+            display: none; /* Hidden by default */
+            padding-left: 1.5rem;
+        }
+        
+        /* Submenu for Horizontal */
+        .krafter-horizontal > ul li > ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            z-index: 60;
+            /* Override to keep vertical structure inside horizontal dropdown */
+            padding-left: 0;
+        }
+
+        .krafter-horizontal > ul li:hover > ul {
+            display: block;
+        }
+
+
+        .krafter-toggle-btn {
+            background: none;
+            border: none;
+            padding: 0.25rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #4f46e5;
+            transition: transform 0.2s;
+        }
+
+        .krafter-item-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Class added when a submenu is active/open */
+        .krafter-open > ul {
+            display: block !important;
+        }
+
+        /* --- TYPE STYLES: ROUNDED (Default) --- */
+        .krafter-rounded li a:hover,
+        .krafter-rounded li .krafter-item-content:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+        }
+
+        /* --- TYPE STYLES: CARDS --- */
+        .krafter-cards {
+            background-color: #eef2ff !important;
+            padding: 1rem;
+        }
+        .krafter-cards li {
+            margin-bottom: 0.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .krafter-cards li a,
+        .krafter-cards li .krafter-item-content {
+            border-radius: 0.5rem;
+        }
+        .krafter-cards li a:hover,
+        .krafter-cards li .krafter-item-content:hover {
+            background-color: #d1d5db;
+        }
+        .krafter-cards li > ul {
+            background-color: transparent !important;
+            padding-left: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* --- TYPE STYLES: ANDROID (Material Design Look) --- */
+        .krafter-android {
+            background-color: white !important;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+            padding: 0;
+            width: 100%;
+            max-width: 360px; /* Standard MD width */
+        }
+        .krafter-android li a,
+        .krafter-android li .krafter-item-content {
+            padding: 0.8rem 1.2rem;
+            font-weight: 500;
+        }
+        .krafter-android li a:hover,
+        .krafter-android li .krafter-item-content:hover {
+            background-color: #eeeeee; /* Light ripple effect */
+        }
+        .krafter-android .krafter-item-content {
+            color: #1f2937; /* Dark text */
+        }
+        .krafter-android .krafter-toggle-btn {
+            color: #4f46e5;
+            background-color: transparent;
+        }
+        .krafter-android li > ul {
+            padding-left: 2rem;
+            border-left: 2px solid #e5e7eb;
+            margin: 0.5rem 0 0.5rem 1rem;
+        }
+        
+        /* --- TYPE STYLES: CIRCLES --- */
+        .krafter-circles > ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            background: none !important;
+            box-shadow: none !important;
+        }
+        .krafter-circles li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .krafter-circles a,
+        .krafter-circles .krafter-item-content {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #3b82f6; /* Blue circle */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+            line-height: 1.2;
+            padding: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .krafter-circles a:hover,
+        .krafter-circles .krafter-item-content:hover {
+            background-color: #2563eb;
+        }
+        .krafter-circles li > ul {
+            display: none !important; /* Circles typically don't support nested menus easily, force vertical for sub-items */
+            position: static;
+            background-color: transparent !important;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+        .krafter-circles .krafter-toggle-btn {
+            color: #3b82f6;
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-3xl font-bold mb-4 text-gray-800">Forks Krafter Menu Examples</h1>
+    <p class="text-gray-600 mb-6">These menus are generated using a custom HTML element, simulating the dynamic loading from a `forkz_remote(data.json)` structure.</p>
+
+    <!-- Example 1: Floating Vertical, Rounded (Default) Type -->
+    <div class="p-4 border rounded-lg bg-white shadow-sm">
+        <h2 class="text-xl font-semibold mb-2">1. Floating, Vertical, Rounded Menu</h2>
+        <code class="bg-gray-100 p-1 rounded block mb-2">&lt;forks-krafter position="top-right" type="rounded" orientation="vertical" background="#f0f9ff"&gt;&lt;/forks-krafter&gt;</code>
+    </div>
+    <forks-krafter position="top-right" type="rounded" orientation="vertical" background="#f0f9ff"></forks-krafter>
+
+    <!-- Example 2: Embedded Horizontal, Android (Material Design) Type -->
+    <div class="p-4 border rounded-lg bg-white shadow-sm">
+        <h2 class="text-xl font-semibold mb-2">2. Embedded, Horizontal, Android (Material) Type</h2>
+        <code class="bg-gray-100 p-1 rounded block mb-2">&lt;forks-krafter type="android" orientation="horizontal" background="white"&gt;&lt;/forks-krafter&gt;</code>
+        <div class="border-2 border-dashed border-indigo-300 p-2 overflow-x-auto">
+            <forks-krafter type="android" orientation="horizontal" background="white"></forks-krafter>
+        </div>
+    </div>
+    
+    <!-- Example 3: Embedded Vertical, Cards Type -->
+    <div class="p-4 border rounded-lg bg-white shadow-sm max-w-sm">
+        <h2 class="text-xl font-semibold mb-2">3. Embedded, Vertical, Cards Type</h2>
+        <code class="bg-gray-100 p-1 rounded block mb-2">&lt;forks-krafter type="cards" orientation="vertical"&gt;&lt;/forks-krafter&gt;</code>
+        <forks-krafter type="cards" orientation="vertical"></forks-krafter>
+    </div>
+
+    <!-- Example 4: Embedded Horizontal, Circles Type (App Icons) -->
+    <div class="p-4 border rounded-lg bg-white shadow-sm">
+        <h2 class="text-xl font-semibold mb-2">4. Embedded, Circles Type (App Icons)</h2>
+        <code class="bg-gray-100 p-1 rounded block mb-2">&lt;forks-krafter type="circles" orientation="horizontal" background="transparent"&gt;&lt;/forks-krafter&gt;</code>
+        <forks-krafter type="circles" orientation="horizontal" background="transparent"></forks-krafter>
+    </div>
+
+
+    <script>
+        // Mock data structure simulating the response from forkz_remote(data.json)
+        // This includes nested 'subItems' for the collapse feature.
+        const mockMenuData = [
+            { id: 1, label: "Dashboard", link: "#dashboard", icon: "🏠" },
+            { 
+                id: 2, 
+                label: "Projects", 
+                link: "#projects", 
+                icon: "📂", 
+                subItems: [
+                    { id: 21, label: "Active", link: "#active" },
+                    { 
+                        id: 22, 
+                        label: "Archived", 
+                        link: "#archived",
+                        subItems: [
+                            { id: 221, label: "2024 Q1", link: "#q1" },
+                            { id: 222, label: "2023 Full Year", link: "#fy" }
+                        ]
+                    },
+                    { id: 23, label: "Create New", link: "#new" }
+                ]
+            },
+            { id: 3, label: "Settings", link: "#settings", icon: "⚙️" },
+            { id: 4, label: "Profile", link: "#profile", icon: "👤" },
+            { id: 5, label: "Help Center", link: "#help", icon: "❓" }
+        ];
+
+        // --- Custom Element Definition ---
+        class ForksKrafter extends HTMLElement {
+            constructor() {
+                super();
+                this.menuId = `krafter-${Math.random().toString(36).substr(2, 9)}`;
+                this.menuData = mockMenuData;
+                this.activeToggles = new Set(); // To track open submenus
+            }
+
+            connectedCallback() {
+                this.render();
+            }
+
+            // Get attribute values or use defaults
+            getAttr(name, defaultValue) {
+                return this.getAttribute(name) || defaultValue;
+            }
+
+            render() {
+                const position = this.getAttr('position', 'embedded');
+                const type = this.getAttr('type', 'rounded');
+                const orientation = this.getAttr('orientation', 'vertical');
+                const background = this.getAttr('background', 'white');
+                const isFloating = position !== 'embedded';
+
+                // 1. Build the main class list
+                let classes = ['forks_krafter', `krafter-${type}`, `krafter-${orientation}`];
+                
+                if (isFloating) {
+                    classes.push('krafter-float', `krafter-${position.replace('-', '_')}`);
+                }
+
+                this.className = classes.join(' ');
+                this.style.backgroundColor = background;
+
+                // 2. Render the menu structure
+                const ul = this.createMenu(this.menuData);
+                this.innerHTML = '';
+                this.appendChild(ul);
+                
+                // 3. Attach event listener for collapse/expand
+                this.addEventListener('click', this.handleToggle.bind(this));
+
+                // 4. Attach event listener for clicks (can be used for navigation)
+                this.addEventListener('click', this.handleItemClick.bind(this));
+            }
+
+            // Recursive function to build the nested UL/LI structure
+            createMenu(items) {
+                const ul = document.createElement('ul');
+                
+                items.forEach(item => {
+                    const li = document.createElement('li');
+                    
+                    if (item.subItems && item.subItems.length > 0) {
+                        li.classList.add('krafter-has-submenu');
+                        // Check if the submenu should be open initially (for persistent state if needed)
+                        if (this.activeToggles.has(item.id)) {
+                             li.classList.add('krafter-open');
+                        }
+                    }
+
+                    // Create the main wrapper for the item content (link + toggle button)
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.className = 'krafter-item-wrapper';
+                    
+                    const linkOrContent = document.createElement(item.link ? 'a' : 'div');
+                    linkOrContent.className = 'krafter-item-content';
+                    if (item.link) {
+                        linkOrContent.setAttribute('href', item.link);
+                    }
+                    linkOrContent.innerHTML = `${item.icon || ''} ${item.label}`;
+                    
+                    contentWrapper.appendChild(linkOrContent);
+
+                    // Add toggle button if there are sub-items
+                    if (item.subItems && item.subItems.length > 0) {
+                        const toggleButton = document.createElement('button');
+                        toggleButton.className = 'krafter-toggle-btn';
+                        toggleButton.setAttribute('data-item-id', item.id);
+                        toggleButton.innerHTML = this.activeToggles.has(item.id) ? '−' : '+'; // Minus if open, Plus if closed
+                        contentWrapper.appendChild(toggleButton);
+                    }
+
+                    li.appendChild(contentWrapper);
+
+                    // Recursively add sub-items
+                    if (item.subItems && item.subItems.length > 0) {
+                        const subUl = this.createMenu(item.subItems);
+                        li.appendChild(subUl);
+                    }
+                    
+                    ul.appendChild(li);
+                });
+
+                return ul;
+            }
+
+            handleToggle(event) {
+                const button = event.target.closest('.krafter-toggle-btn');
+                if (!button) return;
+
+                event.preventDefault();
+                event.stopPropagation(); // Prevent main link action if applicable
+
+                const listItem = button.closest('li');
+                const itemId = parseInt(button.getAttribute('data-item-id'));
+
+                if (listItem.classList.contains('krafter-open')) {
+                    // Collapse
+                    listItem.classList.remove('krafter-open');
+                    button.textContent = '+';
+                    this.activeToggles.delete(itemId);
+                } else {
+                    // Expand
+                    listItem.classList.add('krafter-open');
+                    button.textContent = '−';
+                    this.activeToggles.add(itemId);
+                }
+            }
+
+            handleItemClick(event) {
+                 const item = event.target.closest('.krafter-item-content');
+                 if (item && item.tagName === 'A') {
+                    // In a real application, this would trigger navigation
+                    console.log(`Navigating to: ${item.getAttribute('href')}`);
+                 }
+                 // Custom message box instead of alert()
+                 const message = document.getElementById('message-box');
+                 message.textContent = `Menu Item Clicked: ${item.textContent.trim().split(' ')[0]}`;
+                 message.classList.remove('hidden');
+                 setTimeout(() => message.classList.add('hidden'), 2000);
+            }
+        }
+
+        // Define the custom element
+        customElements.define('forks-krafter', ForksKrafter);
+    </script>
+
+    <!-- Custom Message Box for Clicks (replaces alert()) -->
+    <div id="message-box" class="hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white p-3 rounded-lg shadow-xl transition-opacity duration-300">
+        Item clicked!
+    </div>
+</body>
+</html>
+

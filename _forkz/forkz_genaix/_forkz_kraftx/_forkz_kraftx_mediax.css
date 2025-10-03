@@ -1,0 +1,193 @@
+/* Set default font and background */
+body {
+       font-family: 'Inter', sans-serif;
+       min-height: 200vh; /* Para exemplos flutuantes */
+       background-color: #f7f9fb;
+       padding: 2rem;
+       display: flex;
+       flex-direction: column;
+       gap: 2rem;
+}
+
+/* --- MENUS KRAFTER STYLES (Existing) --- */
+.forks_krafter {
+       padding: 0;
+       list-style: none;
+       border-radius: 0.75rem;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+       transition: all 0.3s ease;
+       max-width: 300px;
+       z-index: 50;
+}
+
+/* POSITIONING STYLES */
+.krafter-float { position: fixed; }
+.krafter-top-left { top: 1rem; left: 1rem; }
+.krafter-top-right { top: 1rem; right: 1rem; }
+.krafter-bottom-left { bottom: 1rem; left: 1rem; }
+.krafter-bottom-right { bottom: 1rem; right: 1rem; }
+
+/* --- VERTICAL/HORIZONTAL ORIENTATION --- */
+.krafter-horizontal > ul { display: flex; flex-wrap: wrap; }
+.forks_krafter ul { list-style: none; padding: 0; margin: 0; background-color: inherit; }
+.forks_krafter li { position: relative; padding: 0; margin: 0; }
+.forks_krafter a, .krafter-item-content {
+       display: block; padding: 0.75rem 1rem; text-decoration: none; color: #333; cursor: pointer; transition: background-color 0.2s, color 0.2s; white-space: nowrap;
+}
+/* --- COLLAPSE/SUBMENU STYLES --- */
+.forks_krafter li > ul { display: none; padding-left: 1.5rem; }
+.krafter-horizontal > ul li > ul {
+       position: absolute; top: 100%; left: 0; min-width: 200px; background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+       padding: 0.5rem 0; z-index: 60; padding-left: 0;
+}
+.krafter-horizontal > ul li:hover > ul { display: block; }
+.krafter-toggle-btn {
+       background: none; border: none; padding: 0.25rem; margin-left: 0.5rem; cursor: pointer; font-weight: bold; font-size: 1rem; width: 1.5rem; height: 1.5rem;
+       display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #4f46e5; transition: transform 0.2s;
+}
+.krafter-item-wrapper { display: flex; align-items: center; justify-content: space-between; }
+.krafter-open > ul { display: block !important; }
+/* --- TYPE STYLES: ROUNDED (Default) --- */
+.krafter-rounded li a:hover, .krafter-rounded li .krafter-item-content:hover { background-color: rgba(79, 70, 229, 0.1); color: #4f46e5; }
+/* --- TYPE STYLES: CARDS --- */
+.krafter-cards { background-color: #eef2ff !important; padding: 1rem; }
+.krafter-cards li { margin-bottom: 0.5rem; background-color: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+.krafter-cards li a, .krafter-cards li .krafter-item-content { border-radius: 0.5rem; }
+.krafter-cards li a:hover, .krafter-cards li .krafter-item-content:hover { background-color: #d1d5db; }
+.krafter-cards li > ul { background-color: transparent !important; padding-left: 0.5rem; margin-top: 0.5rem; }
+/* --- TYPE STYLES: ANDROID (Material Design Look) --- */
+.krafter-android {
+       background-color: white !important; border-radius: 0.5rem; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26); padding: 0; width: 100%; max-width: 360px;
+}
+.krafter-android li a, .krafter-android li .krafter-item-content { padding: 0.8rem 1.2rem; font-weight: 500; }
+.krafter-android li a:hover, .krafter-android li .krafter-item-content:hover { background-color: #eeeeee; }
+.krafter-android .krafter-item-content { color: #1f2937; }
+.krafter-android .krafter-toggle-btn { color: #4f46e5; background-color: transparent; }
+.krafter-android li > ul { padding-left: 2rem; border-left: 2px solid #e5e7eb; margin: 0.5rem 0 0.5rem 1rem; }
+/* --- TYPE STYLES: CIRCLES --- */
+.krafter-circles > ul { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; background: none !important; box-shadow: none !important; }
+.krafter-circles li { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.krafter-circles a, .krafter-circles .krafter-item-content {
+       width: 80px; height: 80px; border-radius: 50%; background-color: #3b82f6; color: white; display: flex; align-items: center; justify-content: center;
+       flex-direction: column; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); font-size: 0.875rem; line-height: 1.2; padding: 0.5rem; margin-bottom: 0.25rem;
+}
+.krafter-circles a:hover, .krafter-circles .krafter-item-content:hover { background-color: #2563eb; }
+.krafter-circles li > ul { display: none !important; position: static; background-color: transparent !important; padding: 0; margin-top: 0.5rem; }
+.krafter-circles .krafter-toggle-btn { color: #3b82f6; margin-left: 0; }
+
+/* --- MEDIA PLAYER STYLES (New) --- */
+
+.forkz_media_player {
+       display: flex;
+       flex-direction: column;
+       border-radius: 0.75rem;
+       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+       background-color: white;
+       overflow: hidden;
+       transition: all 0.4s ease-in-out;
+}
+
+.forkz_media_player video, .forkz_media_player audio {
+       width: 100%;
+       display: block;
+}
+
+/* Playlist Styles */
+.forkz-playlist {
+       max-height: 300px;
+       overflow-y: auto;
+       border-top: 1px solid #e5e7eb;
+       list-style: none;
+       padding: 0;
+       margin: 0;
+}
+
+.forkz-playlist li {
+       padding: 0.75rem 1rem;
+       cursor: pointer;
+       transition: background-color 0.2s;
+       border-bottom: 1px solid #f3f4f6;
+       font-size: 0.9rem;
+       color: #4b5563;
+}
+.forkz-playlist li:hover, .forkz-playlist li.active {
+       background-color: #f3f4f6;
+       color: #1e40af;
+       font-weight: 500;
+}
+
+/* Player Type: Round (Audio) / Square (Video) / Rectangular (Default) */
+.player-square { max-width: 300px; }
+.player-square video, .player-square audio { aspect-ratio: 1 / 1; }
+
+.player-round { 
+       max-width: 300px; 
+       border-radius: 50%;
+       aspect-ratio: 1 / 1;
+}
+/* Make content fit inside the circle */
+.player-round video, .player-round audio { 
+       border-radius: 50%; 
+}
+
+/* Floating Player Style */
+.player-float {
+       position: fixed;
+       bottom: 1rem;
+       right: 1rem;
+       width: 320px;
+       z-index: 100;
+       transition: all 0.3s ease;
+}
+
+.player-float.minimized {
+       width: 60px;
+       height: 60px;
+       border-radius: 50%;
+       overflow: hidden;
+}
+.player-float.minimized .media-content,
+.player-float.minimized .forkz-playlist,
+.player-float.minimized .playlist-toggle,
+.player-float.minimized .player-controls {
+       display: none !important;
+}
+
+.player-float .media-wrapper {
+       position: relative;
+}
+
+.player-float .float-controls {
+       position: absolute;
+       top: 0.5rem;
+       right: 0.5rem;
+       display: flex;
+       gap: 0.25rem;
+       z-index: 110;
+}
+
+.player-float .float-btn {
+       background-color: rgba(0, 0, 0, 0.6);
+       color: white;
+       border: none;
+       border-radius: 50%;
+       width: 28px;
+       height: 28px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       transition: background-color 0.2s;
+       font-size: 0.75rem;
+}
+.player-float .float-btn:hover {
+       background-color: rgba(0, 0, 0, 0.8);
+}
+
+.player-float.minimized .float-btn-minimize {
+       display: none;
+}
+.player-float:not(.minimized) .float-btn-maximize {
+       display: none;
+}
+

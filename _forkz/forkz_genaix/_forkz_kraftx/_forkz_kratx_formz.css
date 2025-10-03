@@ -1,0 +1,39 @@
+body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1f2937; /* Cinza escuro de fundo */
+      color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+}
+.form-container {
+      background-color: #374151; /* Container mais claro */
+      padding: 2.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+}
+/* Estilos base para os campos gerados */
+.forkz-input-base {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 2px solid #4b5563;
+      background-color: #1f2937;
+      color: #f9fafb;
+      transition: border-color 0.2s, box-shadow 0.2s;
+}
+.forkz-input-base:focus {
+      outline: none;
+      border-color: #6366f1; /* Indigo */
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+.forkz-error {
+      color: #ef4444; /* Vermelho para erro */
+      margin-top: 0.25rem;
+      font-size: 0.875rem;
+      min-height: 1.25rem; /* Evita Cumulative Layout Shift */
+}

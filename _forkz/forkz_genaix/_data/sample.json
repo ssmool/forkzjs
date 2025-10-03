@@ -1,0 +1,223 @@
+{
+  "home": [
+    {
+      "item": "New Generation Text",
+      "title": "The Dawn of a New Gaming Generation",
+      "text": "The video game industry continually reinvents itself. We are now entering a period where **cloud gaming, high-fidelity graphics**, and immersive **VR/AR experiences** redefine what it means to play. This new generation emphasizes connectivity, digital distribution, and cross-platform play, pushing the boundaries of technology and storytelling.",
+      "image_url": "https://example.com/images/new_gen_console.png"
+    },
+    {
+      "item": "Tetris Quote",
+      "subject": "The Pocket Revolution: Tetris",
+      "quote": "\"Tetris is so simple, so perfect, so utterly addictive. It's the mathematics of sheer fun.\"",
+      "author": "[Inventor of the first Tetris pocket console - Name]",
+      "context": "On the simplicity and global impact of the first handheld puzzle game.",
+      "video_url": "https://example.com/videos/tetris_inventor_interview.mp4"
+    },
+    {
+      "item": "Arcade & Classic Games",
+      "subject": "The Golden Age of Arcades",
+      "quote_sf": "\"A perfect round of Street Fighter was a ballet of memorized moves and split-second decisions. It was where competitive gaming was truly born.\"",
+      "quote_mk": "\"Mortal Kombat didn't just introduce violence; it introduced a competitive spectacle and a whole new language of gaming.\"",
+      "games": ["Street Fighter II", "Mortal Kombat", "Pinball (The Addams Family)", "USA Derby Racing"],
+      "image_url_arcade": "https://example.com/images/street_fighter_cabinet.png"
+    },
+    {
+      "item": "Crafter Quote",
+      "subject": "The Art of the Cabinet",
+      "quote": "\"Building an arcade machine or restoring a pinball table isn't just carpentry; it's preserving a piece of interactive history, a mechanical-digital work of art.\"",
+      "author": "[Crafter/Restorer Name]",
+      "image_url_crafter": "https://example.com/images/crafter_at_work.png"
+    }
+  ],
+  "consoles": [
+    {
+      "item": "Atari 2600",
+      "mark": "Atari",
+      "history": "Released in 1977, the 2600 popularized the use of interchangeable game cartridges, effectively launching the second generation of video game consoles.",
+      "hardware": "MOS Technology 6507 CPU (1.19 MHz), 128 bytes of RAM.",
+      "inventor": "Jay Miner (TIA chip design), Nolan Bushnell (Co-founder)",
+      "technology": "Cartridge-based system, TIA (Television Interface Adapter) for graphics and sound.",
+      "games_catalog": ["Pac-Man", "Space Invaders", "Missile Command"],
+      "pictures": ["https://example.com/images/a2600_front.png", "https://example.com/images/a2600_joystick.png"],
+      "movies_mp4": "https://example.com/videos/atari_commercial.mp4",
+      "logo_picture": "https://example.com/logos/atari.png",
+      "website": "https://atari.com"
+    },
+    {
+      "item": "Nintendo Entertainment System",
+      "mark": "Nintendo",
+      "history": "[History of the NES/Famicom and its role in reviving the industry after the 1983 crash.]",
+      "hardware": "Ricoh 2A03 CPU (1.79 MHz), 2 KB Work RAM.",
+      "inventor": "Masayuki Uemura",
+      "technology": "Picture Processing Unit (PPU), 8-bit architecture, lock-out chip (CIC) for copy protection.",
+      "games_catalog": ["Super Mario Bros.", "The Legend of Zelda", "Metroid"],
+      "pictures": ["https://example.com/images/nes_console.png"],
+      "movies_mp4": "[URL]",
+      "logo_picture": "https://example.com/logos/nintendo.png",
+      "website": "https://nintendo.com"
+    }
+    // ... more console items for Sega, 3DO, PlayStation, Microsoft
+  ],
+  "games": [
+    // This section was not explicitly defined but is a logical partner to 'consoles'.
+    // I will skip it to maintain the strict structure requested, but it should be here.
+  ],
+  "technologies": [
+    // This section was not explicitly defined but is implied by the detailed 'inventors' section.
+    // I will skip it to maintain the strict structure requested, but it should be here.
+  ],
+  "inventors": [
+    {
+      "item": "Ralph Baer",
+      "name": "Ralph Baer",
+      "history": "Known as the 'Father of Video Games,' he invented the Magnavox Odyssey, the first commercial home video game console.",
+      "hardware": "Inventor of the 'Brown Box' prototype and the Magnavox Odyssey console.",
+      "technology": "Invented the concept of playing games on a home television set.",
+      "machines_inventor": ["Brown Box", "Magnavox Odyssey"],
+      "pictures": ["https://example.com/images/ralph_baer_portrait.png"],
+      "movies_mp4": "https://example.com/videos/baer_interview.mp4",
+      "history_fotos": ["https://example.com/fotos/brown_box_diagram.png"],
+      "websites": ["https://example.com/ralph_baer_official"]
+    },
+    {
+      "item": "Alexey Pajitnov",
+      "name": "Alexey Pajitnov",
+      "history": "Creator of the globally famous puzzle game Tetris, a masterpiece of game theory and simplicity.",
+      "studies": "Focus on computer graphics and speech recognition at the Soviet Academy of Sciences.",
+      "bibliography": "Articles and studies on puzzle dynamics and cognitive games.",
+      "technology": "Algorithm design for the falling-block puzzle game.",
+      "websites": ["https://www.lili.org/forlibs/ce/able/course11/s2-bio-sources-21.htm"]
+    }
+    // ... more inventor items
+  ],
+  "enterprises": [
+    {
+      "item": "Sega Corporation",
+      "name": "Sega Corporation",
+      "history": "Founded in 1960, Sega evolved from an importer of coin-operated games to a major developer of arcades and home consoles, becoming a rival to Nintendo.",
+      "hardware": "Developed the Master System, Genesis/Mega Drive, Saturn, and Dreamcast.",
+      "inventors": ["Hayao Nakayama (Former CEO)"],
+      "technology": "Developed the powerful **Motorola 68000** processor-based Genesis, pioneering 16-bit gaming.",
+      "machines_inventor": ["Model 1 Arcade Hardware", "Sega Genesis"],
+      "pictures": ["https://example.com/images/sega_building.png"],
+      "movies_mp4": "https://example.com/videos/sega_genesis_launch.mp4",
+      "history_fotos": ["https://example.com/fotos/early_sega_arcade.png"],
+      "websites": ["https://sega.com"]
+    }
+    // ... more enterprise items
+  ],
+  "sprites": [
+    {
+      "item": "Sonic The Hedgehog Sprites",
+      "game_title": "Sonic The Hedgehog (Genesis)",
+      "game_description": "A fast-paced platformer starring an anthropomorphic blue hedgehog, famous for its speed and smooth animations.",
+      "webfonts": ["'Sonic' style pixel fonts"],
+      "manual_to_use_sprites": "Use a sprite sheet parser tool like **TexturePacker** or a custom Javascript canvas function to slice the sheet based on predefined coordinates.",
+      "javascript_webgl_bibliography": "Learning WebGL by [Author Name]: Chapters on rendering 2D textures and sprite batching.",
+      "sprites_sites_cattalogs": "https://www.spriters-resource.com/genesis/sonicthehedgehog/",
+      "softwares_for_games_sprites": ["Aseprite", "GIMP", "Piskel"],
+      "pictures": ["https://example.com/sprites/sonic_run_cycle.png"],
+      "movies_mp4": "https://example.com/videos/sprite_ripping_tutorial.mp4",
+      "audio_mp3_of_classical_games_list": "https://example.com/audio/sonic_greenhill.mp3",
+      "history_fotos": ["https://example.com/fotos/sonic_concept_art.png"],
+      "websites": ["https://sonic.sega.jp/"]
+    }
+    // ... more sprite collection items
+  ],
+  "wallpapers": [
+    {
+      "item": "Doom Slayer Mobile",
+      "game_title": "DOOM (Classic)",
+      "images_similar": ["Doom II Title Screen", "Doom Eternal Poster"],
+      "wallpapers_for_mobile_phones": "True",
+      "list_of_wallpapers": [
+        {
+          "url": "https://example.com/wallpapers/doom_slayer_4k.jpg",
+          "title": "Doom Slayer 4K Desktop",
+          "dimension": "3840x2160",
+          "web_site_font": "https://www.doomwallpaperhub.com",
+          "author": "ID Software"
+        },
+        {
+          "url": "https://example.com/wallpapers/doom_mobile_vertical.jpg",
+          "title": "Doom Mobile Vertical",
+          "dimension": "1080x1920",
+          "web_site_font": "https://www.fantasywallpaperco.net",
+          "author": "Fan Art by [Artist Name]"
+        }
+      ]
+    }
+    // ... more wallpaper items
+  ],
+  "about": [
+    {
+      "item": "Website Description",
+      "website_title": "WAREZGAMEZ",
+      "caption": "Your games console study completed site.",
+      "description": "WAREZGAMEZ is a comprehensive digital archive dedicated to the rich history, technology, and culture of classic and modern video games and consoles. We meticulously document the innovators, the machines, and the games that have shaped this incredible medium.",
+      "sections_contained": [
+        {"title": "Home", "href": "#home", "description": "The latest news and classic quotes."},
+        {"title": "Consoles", "href": "#consoles", "description": "Detailed breakdowns of every major console."},
+        {"title": "Inventors", "href": "#inventors", "description": "Biographies of the key pioneers and theorists."},
+        {"title": "Enterprises", "href": "#enterprises", "description": "The corporations that built the industry."},
+        {"title": "Sprites", "href": "#sprites", "description": "Collections and resources for game assets."},
+        {"title": "Wallpapers", "href": "#wallpapers", "description": "Game-themed backgrounds for all devices."},
+        {"title": "Contact", "href": "#contact", "description": "Get in touch with the team."},
+        {"title": "Feed", "href": "#feed", "description": "Curated external articles and media."},
+        {"title": "Blog", "href": "#blog", "description": "Original content and commentary."}
+      ]
+    },
+    {
+      "item": "Authors and Benefits",
+      "authors": [
+        {
+          "name": "[Author 1 Name]",
+          "comment": "My most amazing play was finally beating **Mike Tyson's Punch-Out!!** after months of trying. It taught me the value of persistence and pattern recognition.",
+          "focus": "Mindfulness in Gaming"
+        },
+        {
+          "name": "[Author 2 Name]",
+          "comment": "Discussing how gaming can boost cognitive skills, I've seen firsthand how RTS (Real-Time Strategy) games elevate one's ability to act as a **minder** and **officer**, improving fast-paced decision-making and resource management."
+        }
+      ],
+      "cognitive_benefits_text": "Video games are not just entertainment; they are a powerful tool for cognitive development. Playing games can demonstrably evaluate and enhance **memory, cognitive flexibility, perception, vision quality**, and **communication** skills. They elevate core soft skills, turning players into better strategists (**minder**), creative problem-solvers (**dreamer**), and organized thinkers (**officer** and **student**)."
+    }
+  ],
+  "contact": [
+    {
+      "item": "Contact Areas",
+      "email": "contact@[WAREZGAMEZ].com",
+      "website": "https://www.warezgamez.com",
+      "mobile_phone_secretary": "+55 (11) 98765-4321",
+      "form_url": "https://www.warezgamez.com/scrapbook-submission",
+      "note": "Use the form to append your comments, memories, and game recommendations to our community scrapbook!"
+    }
+  ],
+  "feed": [
+    {
+      "item": "External Article 1",
+      "title": "The Legacy of the Sega Dreamcast's Online System",
+      "description": "A look back at the console that was ahead of its time with built-in internet connectivity.",
+      "url": "https://externalgamingsite.com/dreamcast-online-legacy",
+      "thumbnail": "https://example.com/thumbnails/dreamcast_online.png",
+      "author": "Tech Historian",
+      "font": "External Gaming Site"
+    }
+    // ... more feed items
+  ],
+  "blog": [
+    {
+      "item": "Blog Post 1",
+      "title": "Why 8-Bit Music Still Dominates Retro Culture",
+      "caption": "Exploring the chip-tune sounds that defined a generation.",
+      "description": "An analysis of the limitations and creative genius behind Famicom and NES sound design.",
+      "html_content": "[FULL HTML CONTENT OF THE BLOG POST GOES HERE]",
+      "url": "https://www.warezgamez.com/blog/8bit-music",
+      "thumbnail": "https://example.com/thumbnails/8bit_music.png",
+      "author": "Chiptune Master",
+      "font": "WAREZGAMEZ Blog",
+      "inserted": "2025-10-02T19:30:00-03:00"
+    }
+  ]
+}

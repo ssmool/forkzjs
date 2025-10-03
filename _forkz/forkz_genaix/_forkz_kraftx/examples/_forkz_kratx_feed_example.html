@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Conteúdo Dinâmico | forkz_lib</title>
+    <!-- Carrega o Tailwind CSS para estilização moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style rel="stylesheet" source="_forkz_kratx_feed.css">
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <header class="text-center mb-6">
+             <h1 class="text-4xl font-extrabold text-indigo-400">
+                Editor de Notícias Olímpicas 
+            </h1>
+            <p class="text-lg text-gray-400">Simulação de forkz-str, forkz-str-arr e forkz_remote</p>
+            <button id="load-data-btn" class="mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+                Carregar Dados da Notícia
+            </button>
+        </header>
+
+        <!-- NOVO PAINEL: Compartilhamento e Exportação -->
+        <div class="share-panel">
+            <h2 class="text-xl font-bold mb-4 text-gray-200 border-b border-gray-600 pb-2">Compartilhar & Exportar</h2>
+            <div id="share-buttons" class="flex flex-wrap gap-2 justify-center">
+                <!-- Botões de Compartilhamento Social -->
+                <button onclick="share('mailto')" class="bg-gray-700 hover:bg-gray-600 text-white text-sm py-2 px-3 rounded-lg flex items-center">📧 Email</button>
+                <button onclick="share('facebook')" class="bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-3 rounded-lg flex items-center">📘 Facebook</button>
+                <button onclick="share('linkedin')" class="bg-blue-800 hover:bg-blue-900 text-white text-sm py-2 px-3 rounded-lg flex items-center">👔 LinkedIn</button>
+                <button onclick="share('twitter')" class="bg-black hover:bg-gray-800 text-white text-sm py-2 px-3 rounded-lg flex items-center">𝕏 Twitter</button>
+                <button onclick="share('instagram')" class="bg-pink-600 hover:bg-pink-700 text-white text-sm py-2 px-3 rounded-lg flex items-center">📸 Instagram</button>
+                
+                <!-- Botões de Exportação -->
+                <button onclick="exportTo('rss')" class="bg-orange-600 hover:bg-orange-700 text-white text-sm py-2 px-3 rounded-lg flex items-center">📰 Exportar RSS</button>
+                <button onclick="window.print()" class="bg-yellow-600 hover:bg-yellow-700 text-gray-900 text-sm py-2 px-3 rounded-lg flex items-center">🖨️ Imprimir</button>
+                <button onclick="exportTo('html')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-2 px-3 rounded-lg flex items-center">⬇️ Download HTML</button>
+            </div>
+        </div>
+
+        <!-- CONTAINER PRINCIPAL: Artigo (Texto Rico) -->
+        <div class="news-container" id="main-article">
+            <h2 class="text-3xl font-bold mb-4 text-gray-100" id="article-title">
+                Artigo Principal
+            </h2>
+             <span class="text-sm text-gray-400 block mb-4" id="article-date">
+                Carregue os dados...
+            </span>
+            
+            <label class="block text-sm font-medium text-gray-300">Conteúdo Principal (forkz-str)</label>
+            <!-- Tag forkz-str para o conteúdo do artigo (ANTIGA forkzstr) -->
+            <forkz-str _forkx="main_content" _forkz_assets="assets" class="mt-4" content="Clique em 'Carregar Dados da Notícia' para iniciar a edição."></forkz-str>
+        </div>
+
+        <!-- NOVO CONTAINER: Fila de Repetição (forkz-str-arr) -->
+        <div class="editor-container">
+            <h2 class="text-2xl font-bold mb-4 text-center text-yellow-400">
+                Fila de Repetição: Atualizações Relacionadas
+            </h2>
+            
+            <!-- Simulando forkz-str-arr fillz="{{_data.updates}}" -->
+            <div id="repetition-container" class="space-y-5">
+                <p class="text-center text-gray-400">Aguardando dados de {{_data.updates}}...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulação da inclusão do forkzjs.js, que seria carregado no ambiente real -->
+    <script src="https://github.com/ssmool/forkzjs/forkzjs.js"></script>
+
+    <script>
+        // --- CUSTOM ELEMENT: <forkz-str-arr> (Fila de Repetição - Corrigido o nome da tag) ---
+        class ForkzStrArr extends HTMLElement {
+            connectedCallback() {
+                const dataPath = this.getAttribute('fillz');
+                if (!dataPath) return;
+
+                const dataArray = this.evaluateDataPath(dataPath);
+                if (!Array.isArray(dataArray)) {
+                    this.innerHTML = `<h6 class="text-red-400">Erro: fillz="${dataPath}" não retornou um array.</h6>`;
+                    return;
+                }
+
+                this.innerHTML = '';
+                dataArray.forEach(item => {
+                    // Simula a repetição: <forkz-str> populado por {{ data.childNode }}
+                    const itemContainer = document.createElement('div');
+                    itemContainer.className = 'border border-gray-600 p-3 rounded-md mb-3';
+                    
+                    // Título do item da repetição
+                    const titleElement = document.createElement('h4');
+                    titleElement.className = 'text-lg font-semibold text-indigo-300 mb-2';
+                    titleElement.textContent = `[ID: ${item.node_id}] ${item.title}`;
+                    itemContainer.appendChild(titleElement);
+
+                    // Cria e popula a instância de forkz-str (ANTIGA forkzstr)
+                    const forkzStrInstance = document.createElement('forkz-str'); 
+                    forkzStrInstance.setAttribute('_forkx', `update-${item.node_id}`);
+                    forkzStrInstance.setAttribute('content', item.content);
+                    // IMPORTANTE: O componente filho herda os assets
+                    forkzStrInstance.setAttribute('_forkz_assets', 'assets'); 
+                    
+                    itemContainer.appendChild(forkzStrInstance);
+                    this.appendChild(itemContainer);
+
+                    // Força a renderização e carregamento do conteúdo
+                    setTimeout(() => forkzStrInstance.loadContent(item.content), 0);
+                });
+            }
+
+            // Simula a avaliação de '{{_data.node}}' no contexto do mockOlympicsData
+            evaluateDataPath(path) {
+                // Remove {{ }}
+                const key = path.replace(/\{\{|\}\}/g, '').trim().split('.')[1];
+                return window.mockOlympicsData ? window.mockOlympicsData[key] : [];
+            }
+        }
+        customElements.define('forkz-str-arr', ForkzStrArr); // CORREÇÃO: Adicionado hífen
+
+        // --- CUSTOM ELEMENT: <forkz-str> (Editor de Conteúdo - Corrigido o nome da tag) ---
+        class ForkzStr extends HTMLElement {
+            constructor() {
+                super();
+                this.editor = null;
+                this.currentFontSize = 16;
+                this.popup = null;
+            }
+
+            connectedCallback() {
+                this.render();
+                const initialContent = this.getAttribute('content');
+                if (initialContent && this.editor) {
+                    this.loadContent(initialContent);
+                }
+            }
+
+            loadContent(content) {
+                 if (this.editor) {
+                    this.editor.innerHTML = content;
+                 }
+            }
+
+            handleFontSize(increase) {
+                if (!this.editor) return;
+                const step = 2;
+                this.currentFontSize = increase 
+                    ? Math.min(this.currentFontSize + step, 30) 
+                    : Math.max(this.currentFontSize - step, 12); 
+                this.editor.style.fontSize = `${this.currentFontSize}px`;
+            }
+            
+            // Nova função para inserir EMBED (iframe/div)
+            insertEmbed(url) {
+                if (!this.editor) return;
+                
+                let embedHTML = `
+                    <div class="media-embed-url my-4">
+                        <span class="text-sm font-semibold text-yellow-300 block mb-2">🔗 URL EMBED: ${url.substring(0, 50)}...</span>
+                        <!-- Usando iframe como método padrão de embed -->
+                        <iframe src="${url}" width="100%" height="250" style="border:none; border-radius: 5px;">
+                            <p>Seu navegador não suporta iframes.</p>
+                        </iframe>
+                    </div>
+                `;
+
+                document.execCommand('insertHTML', false, embedHTML);
+            }
+
+            insertMedia(url, type, title, position, shape) {
+                if (!this.editor) return;
+
+                let mediaHTML = '';
+                let alignmentClass = '';
+                let shapeClass = '';
+
+                // 1. Posicionamento
+                if (position === 'left' || position === 'right') {
+                    alignmentClass = `float-${position} mr-4 ml-4 mb-2`; 
+                } else if (position === 'top' || position === 'bottom') {
+                    // Block center
+                    alignmentClass = 'block mx-auto mb-2';
+                }
+
+                // 2. Formato (rounde 10px / circulo)
+                if (shape === 'circulo') {
+                    shapeClass = 'rounded-full';
+                } else if (shape === 'rounde-10px') {
+                    shapeClass = 'rounded-[10px]';
+                } else {
+                    shapeClass = 'rounded-lg';
+                }
+                
+                const finalClasses = `max-w-[300px] w-auto h-auto ${alignmentClass} ${shapeClass} shadow-lg`;
+
+                if (type === 'image') {
+                    mediaHTML = `<img src="${url}" alt="${title}" title="${title}" class="${finalClasses}" />`;
+                } else if (type === 'video') {
+                    mediaHTML = `
+                        <video controls class="${finalClasses}">
+                            <source src="${url}" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>`;
+                } else if (type === 'audio') {
+                    const fileName = title.replace(/\.(mp3|ogg)$/i, ''); // Remove extensão do título
+                    mediaHTML = `
+                        <div class="media-audio-embed bg-gray-700">
+                            <span class="text-sm font-semibold text-green-300">🎵 Arquivo de Áudio: ${fileName}</span>
+                            <audio controls class="mt-2 w-full">
+                                <source src="${url}" type="audio/mp3">
+                                Seu navegador não suporta a tag de áudio.
+                            </audio>
+                        </div>`;
+                }
+                
+                document.execCommand('insertHTML', false, mediaHTML);
+            }
+
+            showPopup(url, type, title) {
+                if (this.popup) this.popup.remove();
+
+                const isVideo = type === 'video';
+                
+                const content = document.createElement('div');
+                content.className = 'popup-content';
+                content.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-3 text-white">${title}</h3>
+                    ${isVideo 
+                        ? `<video controls class="popup-media" style="max-width: 600px; max-height: 400px;"><source src="${url}" type="video/mp4"></video>`
+                        : `<img src="${url}" alt="${title}" class="popup-media" style="max-width: 600px; max-height: 400px;"/>`
+                    }
+                    <div class="flex justify-between items-center mt-4">
+                        <a href="${url}" download="${title}.${isVideo ? 'mp4' : 'jpg'}" 
+                           class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download
+                        </a>
+                        <button class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md" onclick="this.closest('.popup-overlay').remove()">Fechar</button>
+                    </div>
+                `;
+
+                this.popup = document.createElement('div');
+                this.popup.className = 'popup-overlay';
+                this.popup.addEventListener('click', (e) => {
+                    if (e.target === this.popup) this.popup.remove();
+                });
+                this.popup.appendChild(content);
+
+                document.body.appendChild(this.popup);
+            }
+
+            render() {
+                // Título e Controles de Fonte
+                const controls = document.createElement('div');
+                controls.className = 'flex justify-between items-center mb-2';
+                controls.innerHTML = `
+                    <span class="text-sm text-gray-400">Controles de Fonte:</span>
+                    <div class="space-x-2">
+                        <button id="font-minus" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-3 rounded-full text-lg shadow-md">-</button>
+                        <button id="font-plus" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-3 rounded-full text-lg shadow-md">+</button>
+                    </div>
+                `;
+                this.appendChild(controls);
+
+                // Editor ContentEditable (Caixa de Texto)
+                this.editor = document.createElement('div');
+                this.editor.className = 'forkzstr-editor focus:border-indigo-500 transition duration-150';
+                this.editor.setAttribute('contenteditable', 'true');
+                this.editor.setAttribute('spellcheck', 'false');
+                this.editor.setAttribute('placeholder', this.getAttribute('content') || 'Digite seu texto rico aqui...');
+                this.appendChild(this.editor);
+                
+                // Galeria de Fotos (Miniaturas)
+                const galleryContainer = document.createElement('div');
+                galleryContainer.className = 'mt-4 pt-4 border-t border-gray-600';
+                galleryContainer.innerHTML = '<span class="text-sm font-medium text-gray-300 block mb-3">Galeria de Mídia (Clique para Inserir ou Pré-visualizar):</span>';
+                
+                const gallery = document.createElement('div');
+                gallery.className = 'flex flex-wrap gap-3';
+                
+                const assetsKey = this.getAttribute('_forkz_assets');
+                // Assume que os assets estão no mockOlympicsData
+                const assets = assetsKey && window.mockOlympicsData ? window.mockOlympicsData[assetsKey] : [];
+
+                // 1. Botão Adicionar Embed Genérico (Simulando o atributo 'embbed')
+                const embedBtn = document.createElement('button');
+                embedBtn.textContent = 'Embed URL Externa';
+                embedBtn.className = 'bg-yellow-500 hover:bg-yellow-600 text-gray-900 text-xs py-2 px-3 rounded-lg transition duration-200';
+                embedBtn.onclick = () => {
+                    // Simula a obtenção de uma URL de embed (ex: vídeo do YouTube, mapa, etc.)
+                    const embedUrl = prompt("Insira a URL para EMBED (ex: https://www.google.com/webhp?hl=pt-BR&igu=1):");
+                    if (embedUrl) {
+                        this.insertEmbed(embedUrl);
+                    }
+                };
+                galleryContainer.appendChild(embedBtn);
+                
+                // Adiciona espaço
+                galleryContainer.appendChild(document.createElement('div')).className = 'h-3';
+                galleryContainer.appendChild(gallery);
+
+                // 2. Assets da Galeria (Imagens, Vídeos, Áudios)
+                assets.forEach(asset => {
+                    const item = document.createElement('div');
+                    item.className = 'relative group';
+                    
+                    const isVideo = asset.type === 'video';
+                    const isAudio = asset.type === 'audio';
+
+                    const thumbnail = document.createElement(isVideo ? 'video' : 'img');
+                    thumbnail.src = asset.url;
+                    thumbnail.className = 'media-thumbnail rounded-[10px]';
+                    
+                    if (isVideo) {
+                        thumbnail.setAttribute('poster', 'https://placehold.co/80x80/000/fff?text=MP4');
+                    } else if (isAudio) {
+                         thumbnail.src = 'https://placehold.co/80x80/000/fff?text=MP3/OGG';
+                    }
+
+                    // Tooltip/Ícone
+                    const icon = document.createElement('div');
+                    icon.className = 'absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 bg-black bg-opacity-40 text-white text-xl rounded-[10px]';
+                    icon.innerHTML = isAudio ? '🔊' : '➕';
+                    
+                    item.appendChild(thumbnail);
+                    item.appendChild(icon);
+                    
+                    // Evento de clique para inserção e popup
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+
+                        if (isAudio) {
+                            this.insertMedia(asset.url, asset.type, asset.title, 'left', 'rounde-10px');
+                        } else if (asset.type === 'image' || isVideo) {
+                            // Inserção com posicionamento e forma, depois popup
+                            this.insertMedia(asset.url, asset.type, asset.title, asset.position, asset.shape);
+                            this.showPopup(asset.url, asset.type, asset.title);
+                        }
+                    });
+                    
+                    gallery.appendChild(item);
+                });
+
+                this.appendChild(galleryContainer);
+
+                // Adiciona listeners aos botões
+                this.querySelector('#font-plus').addEventListener('click', () => this.handleFontSize(true));
+                this.querySelector('#font-minus').addEventListener('click', () => this.handleFontSize(false));
+            }
+        }
+
+        customElements.define('forkz-str', ForkzStr); // CORREÇÃO: Adicionado hífen
+        // O elemento forkz-field não é mais essencial, mas é mantido para compatibilidade
+        // com a primeira iteração, a menos que seja explicitamente removido.
+
+        // --- Lógica Comum e Mock Data ---
+        
+        // Mock data object (simulando o resultado do forkz_remote para Notícias das Olimpíadas)
+        window.mockOlympicsData = {
+            _uri: "olympics/news/paris2024",
+            title: "Olimpíadas Paris 2024: Destaques da Última Semana",
+            date: "2024-08-05",
+            // Assets para o editor principal (_forkz_assets="assets")
+            assets: [
+                { type: 'image', url: 'https://placehold.co/800x600/6366f1/ffffff?text=Atleta+em+Ação', title: 'Atleta em Ação', position: 'right', shape: 'circulo' },
+                { type: 'image', url: 'https://placehold.co/800x600/ef4444/ffffff?text=Pódio', title: 'Pódio Medalhas', position: 'left', shape: 'rounde-10px' },
+                { type: 'video', url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoy.mp4', title: 'Melhores Momentos', position: 'top' },
+                { type: 'audio', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', title: 'Hino Olímpico.mp3', position: 'left' }
+            ],
+            // Array para o forkz-str-arr (simulando {{_data.updates}})
+            updates: [
+                { node_id: 1, title: "Ouro no Judô", content: "A performance do atleta brasileiro no judô foi espetacular, conquistando a primeira medalha de ouro da delegação. A luta final foi eletrizante. <br> Use o **+** e **-** para alterar o tamanho da fonte. ", asset_url: 'https://placehold.co/80x80/000/fff?text=Judô' },
+                { node_id: 2, title: "Recorde na Natação", content: "Novo recorde mundial na natação 100m livre. O público foi à loucura com a velocidade impressionante. Este conteúdo foi populado via **forkz-str-arr**.", asset_url: 'https://placehold.co/80x80/000/fff?text=Natação' }
+            ]
+        };
+
+        function loadNewsData(data) {
+            console.log("Simulando carregamento de dados da notícia:", data);
+            
+            // 1. Atualiza Título e Data
+            document.getElementById('article-title').textContent = data.title;
+            document.getElementById('article-date').textContent = `Publicado em: ${data.date}`;
+            
+            // 2. Processar o Custom Element <forkz-str> principal
+            const forkzStr = document.querySelector('forkz-str[_forkx="main_content"]'); // CORREÇÃO: Usando a nova tag
+            if (forkzStr) {
+                 // Usa um conteúdo rico inicial
+                 const initialContent = `<p>Notícia carregada com sucesso! Clique nas miniaturas abaixo para inserir mídias com posicionamento (esquerda/direita) ou use o botão 'Embed URL'.</p>`;
+                 forkzStr.loadContent(initialContent);
+            }
+
+            // 3. Inicia a repetição simulada do forkz-str-arr
+            const repContainer = document.getElementById('repetition-container');
+            if (repContainer) {
+                 repContainer.innerHTML = '';
+                 const arrElement = document.createElement('forkz-str-arr'); // CORREÇÃO: Usando a nova tag
+                 // O fillz aponta para o array no objeto de dados
+                 arrElement.setAttribute('fillz', '{{_data.updates}}');
+                 repContainer.appendChild(arrElement);
+            }
+
+            alert('Dados de Notícias das Olimpíadas carregados com sucesso! O editor e a fila de repetição estão prontos.');
+        }
+
+        // --- Funções de Compartilhamento e Exportação ---
+
+        function share(platform) {
+            const articleTitle = encodeURIComponent(document.getElementById('article-title').textContent);
+            const currentUrl = encodeURIComponent(window.location.href);
+            let shareUrl = '';
+
+            // Lógica de URLs de compartilhamento
+            switch(platform) {
+                case 'mailto':
+                    shareUrl = `mailto:?subject=${articleTitle}&body=Confira esta notícia: ${articleTitle}%0A%0A${currentUrl}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}&quote=${articleTitle}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${articleTitle}`;
+                    break;
+                case 'twitter': // Novo X
+                    shareUrl = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${articleTitle}`;
+                    break;
+                case 'instagram':
+                    // Instagram não permite compartilhamento direto via URL simples, apenas via API. 
+                    alert('Compartilhamento no Instagram requer API ou aplicativo, simulação de notificação: Notícia copiada para o clipboard!');
+                    return;
+                default:
+                    return;
+            }
+            window.open(shareUrl, '_blank');
+        }
+
+        function exportTo(type) {
+            const articleTitle = window.mockOlympicsData.title || 'Exportação de Conteúdo';
+            
+            if (type === 'rss') {
+                alert('Simulando a exportação para o formato RSS. Este geraria um arquivo XML com a notícia e metadados.');
+            } else if (type === 'html') {
+                // Simula o download do conteúdo principal (clean version)
+                const mainContent = document.querySelector('forkz-str[_forkx="main_content"] .forkzstr-editor').innerHTML; // CORREÇÃO: Usando a nova tag
+                const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head><title>${articleTitle}</title></head>
+<body>
+    <h1>${articleTitle}</h1>
+    ${mainContent}
+    <p>Conteúdo exportado via forkz_lib.</p>
+</body>
+</html>`;
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = articleTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        }
+        
+        // --- Listener para o botão de Carregar Dados ---
+        document.getElementById('load-data-btn').addEventListener('click', () => {
+             loadNewsData(window.mockOlympicsData);
+        });
+        
+    </script>
+</body>
+</html>
+
