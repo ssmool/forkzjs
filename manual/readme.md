@@ -19,7 +19,9 @@ It supports class‑based customization, letting you style output as you like wh
 
 ---
 
-## 🚀 READ FORKZJS AI Developer - FOR KNOW A NOVEU AI GENAIX CREATE WEB APPLICATIONS BASED ON DATA FILES: ![FORKZJSAIDeveloper](FORKZJSAIDeveloper.MD)
+## 🚀 READ FORKZJS AI Developer - FOR KNOW A NOVEU AI GENAIX CREATE WEB APPLICATIONS BASED ON DATA FILES:
+
+![FORKZJSAIDeveloper](./FORKZJSAIDeveloper.MD)
 
 ## 📦 Included Modules
 
