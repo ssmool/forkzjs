@@ -608,5 +608,5 @@ chmod +x run_forkz_sample.sh
 
 ![FORKZJS](../assets/main-qimg-ff13e07bf3f859e0806417ff4c2a3b13-lq.jpg)
 
-
+### 💾 "Hope is like the sun. If you only believe in it when you can see it, you'll never make it through the night" - A powerful statement from The Last Jedi.
 
